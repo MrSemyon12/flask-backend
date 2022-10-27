@@ -1,14 +1,10 @@
-{% extends 'base.html' %} {% block head %}<title>Reviews</title>{% endblock
-head%} {% block body %}
+{% extends 'base.html' %} {% block head %}<title>Movies</title>{% endblock head
+%} {% block body %}
 <div class="container">
   <header class="d-flex justify-content-center py-3">
     <ul class="nav nav-pills">
       <li class="nav-item"><a href="/movies" class="nav-link">Фильмы</a></li>
-      <li class="nav-item">
-        <a href="/reviews" class="nav-link active" aria-current="page"
-          >Отзывы</a
-        >
-      </li>
+      <li class="nav-item"><a href="/reviews" class="nav-link">Отзывы</a></li>
       <li class="nav-item">
         <a href="/directors" class="nav-link">Режиссеры</a>
       </li>
@@ -16,11 +12,11 @@ head%} {% block body %}
   </header>
 </div>
 <div class="container table-responsive">
-  {% set n = len(reviews) %}
+  {% set n = len(film) %}
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        {% for name in reviews.dtypes.index %} {% if name != id %}
+        {% for name in film.dtypes.index %} {% if name != id %}
         <th>{{ name }}</th>
         {% endif %} {% endfor %}
       </tr>
@@ -28,8 +24,8 @@ head%} {% block body %}
     <tbody>
       {% for i in range(n) %}
       <tr>
-        {% for name in reviews.dtypes.index %}
-        <td>{{ reviews.loc[i, name] }}</td>
+        {% for name in film.dtypes.index %}
+        <td>{{ film.loc[i, name] }}</td>
         {% endfor %}
       </tr>
       {% endfor %}

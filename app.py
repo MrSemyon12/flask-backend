@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask
 
 app = Flask(__name__)
 
@@ -8,6 +8,7 @@ import controllers.snake
 import controllers.about
 import controllers.movies
 import controllers.reviews
+import controllers.movie
 
 
 if __name__ == '__main__':
