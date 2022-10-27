@@ -1,0 +1,48 @@
+body {
+  font-family: "PT Sans", Arial, Tahoma;
+  font-size: 24px;
+  line-height: 20px;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  background-color: #8edbd8;
+}
+
+.backplate {
+  background: #ffffff;
+  box-shadow: 0 2px 5px;
+  border-radius: 10px;
+  max-width: 780px;
+  margin: auto;
+  padding: 40px;
+  min-height: 1200px;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.main-box {
+  text-align: left;
+}
+
+.flexbox {
+  display: flex;
+}
+
+.left {
+  border: 5px solid rgba(137, 177, 164, 0.19);
+  border-radius: 10px;
+  overflow: hidden;
+  width: 220px;
+  height: 220px;
+  background: #f0f0f0;
+  flex-shrink: 0;
+}
+
+.right {
+  margin-left: 30px;
+}
+
+.txt {
+  margin-bottom: 5px;
+  font-size: 24px;
+}

@@ -1,0 +1,270 @@
+DROP TABLE IF EXISTS director;
+
+CREATE TABLE director (
+    director_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    director_name VARCHAR(45),
+    photo_url VARCHAR(255)
+);
+
+DROP TABLE IF EXISTS genre;
+
+CREATE TABLE genre (
+    genre_name VARCHAR(20) PRIMARY KEY
+);
+
+DROP TABLE IF EXISTS actor;
+
+CREATE TABLE actor (
+    actor_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    actor_name VARCHAR(45),
+    photo_url VARCHAR(255)
+);
+
+DROP TABLE IF EXISTS user;
+
+CREATE TABLE user (
+    user_name VARCHAR(45) PRIMARY KEY,
+    password VARCHAR(20)
+);
+
+DROP TABLE IF EXISTS film;
+
+CREATE TABLE film (
+    film_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title VARCHAR(20),
+    year INTEGER,
+    poster_url VARCHAR(255),
+    rating DECIMAL(3,1),
+    director_id INTEGER,
+    FOREIGN KEY (director_id) REFERENCES director (director_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+DROP TABLE IF EXISTS film_actor;
+
+CREATE TABLE film_actor (
+    film_id INTEGER,
+    actor_id INTEGER,
+    FOREIGN KEY (film_id) REFERENCES film (film_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (actor_id) REFERENCES actor (actor_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+DROP TABLE IF EXISTS film_genre;
+
+CREATE TABLE film_genre (
+    film_id INTEGER,
+    genre_name VARCHAR(20),
+    FOREIGN KEY (film_id) REFERENCES film (film_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (genre_name) REFERENCES genre (genre_name) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+DROP TABLE IF EXISTS review;
+
+CREATE TABLE review (
+    film_id INTEGER,
+    user_name INTEGER,
+    post_date DATETIME,  
+    comment VARCHAR(255),
+    mark INTEGER,
+    FOREIGN KEY (film_id) REFERENCES film (film_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_name) REFERENCES user (user_name) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+INSERT INTO director (director_name) VALUES
+('Гай Ричи'),
+('Мэтт Ривз'),
+('Ридли Скотт'),
+('Джеймс Кэмерон'),
+('Никита Михалков'),
+('Клинт Иствуд'),
+('Эдгар Райт'),
+('Баз Лурман'),
+('Оливер Стоун'),
+('Квентин Тарантино'),
+('Джеймс Ганн'),
+('Майкл Бэй'),
+('Шон Леви'),
+('Мартин Скорсезе'),
+('Дени Вильнёв'),
+('Тим Бёртон'),
+('Андрей Тарковский'),
+('Стивен Спилберг'),
+('Сэм Рэйми'),
+('Люк Бессон'),
+('Джон Уоттс'),
+('Зак Снайдер'),
+('Роб Коэн'),
+('Кристофер Нолан');
+
+INSERT INTO film (title, year, director_id) VALUES 
+('Трансформеры', 2007, 12),
+('Форсаж', 2001, 23),
+('Интерстеллар', 2014, 24),
+('Малыш на драйве', 2017, 7),
+('Начало', 2010, '24'),
+('Зомби по имени Шон', 2004, 7),
+('Армагеддец', 2013, 7),
+('Великий Гэтсби', 2013, 8),
+('Волк с Уолл-стрит', 2013, 14),
+('Человек-паук', 2002, 18),
+('Терминатор', 1984, 4);
+
+INSERT INTO genre (genre_name) VALUES
+('экшн'),
+('боевик'),
+('приключения'),
+('детектив'),
+('драма'),
+('фантастика'),
+('научная фантастика'),
+('фэнтези'),
+('документальный'),
+('ужасы'),
+('комедия'),
+('триллер'),
+('биография'),
+('комиксы');
+
+INSERT INTO film_genre (film_id, genre_name) VALUES 
+(1, 'экшн'),
+(1, 'приключения'),
+(1, 'научная фантастика'),
+(1, 'драма'),
+(2, 'боевик'),
+(2, 'триллер'),
+(3, 'научная фантастика'),
+(3, 'драма'),
+(4, 'боевик'),
+(4, 'триллер'),
+(5, 'научная фантастика'),
+(5, 'боевик'),
+(5, 'триллер'),
+(5, 'драма'),
+(6, 'комедия'),
+(7, 'комедия'),
+(7, 'фантастика'),
+(8, 'драма'),
+(9, 'биография'),
+(9, 'драма'),
+(9, 'комедия'),
+(10, 'комиксы'),
+(10, 'боевик'),
+(10, 'научная фантастика'),
+(10, 'драма'),
+(11, 'научная фантастика'),
+(11, 'боевик'),
+(11, 'триллер');
+
+INSERT INTO actor (actor_name) VALUES
+('Шайа Лабаф'),
+('Меган Фокс'),
+('Джош Дюамель'),
+('Джон Туртурро'),
+('Джон Войт'),
+('Тайриз Гибсон'),
+('Рэйчел Тейлор'),
+('Энтони Андерсон'),
+('Пол Уокер'),
+('Вин Дизель'),
+('Мишель Родригес'),
+('Джордана Брюстер'),
+('Мэтт Шульц'),
+('Мэттью Макконахи'),
+('Энн Хэтэуэй'),
+('Джессика Честейн'),
+('Майкл Кейн'),
+('Энсел Эльгорт'),
+('Лили Джеймс'),
+('Кевин Спейси'),
+('Джейми Фокс'),
+('Джон Хэмм'),
+('Леонардо Ди Каприо'),
+('Кэн Ватанабэ'),
+('Джозеф Гордон-Левитт'),
+('Эллен Пейдж'),
+('Марион Котийяр'),
+('Том Харди'),
+('Киллиан Мёрфи'),
+('Том Беренджер'),
+('Дилип Рао'),
+('Майкл Кейн'),
+('Саймон Пегг'),
+('Ник Фрост'),
+('Тоби Магуайр'),
+('Кэри Маллиган'),
+('Джоэл Эдгертон'),
+('Джона Хилл'),
+('Марго Робби'),
+('Жан Дюжарден'),
+('Уиллем Дефо'),
+('Кирстен Данст'),
+('Джеймс Франко'),
+('Клифф Робертсон'),
+('Розмари Харрис'),
+('Арнольд Шварценеггер'),
+('Майкл Бин'),
+('Линда Хэмилтон'),
+('Лэнс Хенриксен');
+
+INSERT INTO film_actor (film_id, actor_id) VALUES 
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 5),
+(1, 6),
+(1, 7),
+(1, 8),
+(2, 9),
+(2, 10),
+(2, 11),
+(2, 12),
+(2, 13),
+(3, 14),
+(3, 15),
+(3, 16),
+(3, 17),
+(4, 18),
+(4, 19),
+(4, 20),
+(4, 21),
+(5, 22),
+(5, 23),
+(5, 24),
+(5, 25),
+(5, 26),
+(5, 27),
+(5, 28),
+(5, 29),
+(5, 30),
+(5, 31),
+(5, 32),
+(6, 33),
+(6, 34),
+(7, 33),
+(7, 34),
+(8, 35),
+(8, 23),
+(8, 36),
+(8, 37),
+(9, 23),
+(9, 38),
+(9, 39),
+(9, 14),
+(9, 40),
+(10, 35),
+(10, 41),
+(10, 42),
+(10, 43),
+(10, 44),
+(10, 45),
+(11, 46),
+(11, 47),
+(11, 48),
+(11, 49);
+
+INSERT INTO user (user_name, password) VALUES 
+('admin', 'admin');
+
+INSERT INTO review (film_id, user_name, post_date, comment, mark) VALUES
+(1, 'user1', DATETIME('now'), 'Мне понравилось, хорошее кино. Всем рекомендую!', 9),
+(1, 'user2', DATETIME('now'), 'Ужасный фильм, как такое можно было снять... В пустую потратил время.', 2);

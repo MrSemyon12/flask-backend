@@ -1,0 +1,35 @@
+{% extends 'base.html' %} {% block head %}<title>Reviews</title>{% endblock
+head%} {% block body %}
+<div class="container">
+  <header class="d-flex justify-content-center py-3">
+    <ul class="nav nav-pills">
+      <li class="nav-item"><a href="/movies" class="nav-link">Movies</a></li>
+      <li class="nav-item">
+        <a href="/reviews" class="nav-link active" aria-current="page"
+          >Reviews</a
+        >
+      </li>
+      <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+    </ul>
+  </header>
+</div>
+<div class="container">
+  {% set n = len(reviews) %}
+  <table class="table">
+    <tr>
+      {% for name in reviews.dtypes.index %} {% if name != id %}
+      <th>{{name}}</th>
+      {% endif %} {% endfor %}
+    </tr>
+    <tbody>
+      {% for i in range(n) %}
+      <tr>
+        {% for name in reviews.dtypes.index %} {% if name != id %}
+        <td>{{ reviews.loc[i, name] }}</td>
+        {% endif %} {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock body %}
