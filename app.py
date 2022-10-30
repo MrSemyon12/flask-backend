@@ -9,6 +9,7 @@ import controllers.about
 import controllers.movies
 import controllers.reviews
 import controllers.movie
+import controllers.sign_in_up
 
 
 if __name__ == '__main__':
