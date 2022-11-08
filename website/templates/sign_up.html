@@ -1,5 +1,5 @@
-{% extends 'base.html' %} {% block title %}Sign-Up{% endblock %} {% block body
-%}
+{% extends 'base.html' %} {% block title %}Регистрация{% endblock %} {% block
+body %}
 <div class="container">
   <div class="row mt-5">
     <div class="col">
@@ -20,10 +20,6 @@
         <button type="submit" class="btn btn-primary mt-4">
           Зарегистрироваться
         </button>
-
-        {% if error %}
-        <p class="text-danger mt-2">Имя пользователя занято</p>
-        {% endif %}
       </form>
     </div>
   </div>

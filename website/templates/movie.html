@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block title %}Movie{% endblock %} {% block body %}
+{% extends 'base.html' %} {% block title %}Фильмы{% endblock %} {% block body %}
 
 <div class="container">
   <div class="row mt-5">
@@ -59,18 +59,19 @@
       {% for i in range(len(reviews)) %}
       <div class="card mt-2">
         <div class="card-body">
-          <div class="d-flex d-flex justify-content-between">
+          <div class="d-flex justify-content-between">
             <h4>{{ reviews.loc[i, 'user_name'] }}</h4>
             <h4>{{ reviews.loc[i, 'post_date'] }}</h4>
           </div>
           <hr />
-          <div class="d-flex d-flex justify-content-between">
+          <div class="d-flex justify-content-between">
             <p>{{ reviews.loc[i, 'comment'] }}</p>
             <p>Оценка: {{ reviews.loc[i, 'mark'] }}</p>
           </div>
         </div>
       </div>
       {% endfor %}
+      <div class="mb-5"></div>
     </div>
   </div>
 </div>

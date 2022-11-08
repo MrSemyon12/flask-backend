@@ -23,8 +23,9 @@ CREATE TABLE actor (
 DROP TABLE IF EXISTS user;
 
 CREATE TABLE user (
-    user_name VARCHAR(45) PRIMARY KEY,
-    password VARCHAR(20)
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(255),
+    password VARCHAR(255)
 );
 
 DROP TABLE IF EXISTS film;
@@ -251,9 +252,6 @@ INSERT INTO film_actor (film_id, actor_id) VALUES
 (11, 46),
 (11, 47),
 (11, 48);
-
-INSERT INTO user (user_name, password) VALUES 
-('admin', 'admin');
 
 INSERT INTO review (film_id, user_name, post_date, comment, mark) VALUES
 (1, 'user1', DATETIME('now'), 'Мне понравилось, хорошее кино. Всем рекомендую!', 9),

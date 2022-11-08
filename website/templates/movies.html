@@ -1,4 +1,5 @@
-{% extends 'base.html' %} {% block title %}Movies{% endblock %} {% block body %}
+{% extends 'base.html' %} {% block title %}Фильмотека{% endblock %} {% block
+body %}
 
 <div class="container table-responsive mt-5">
   {% set n = len(films) %}
@@ -15,7 +16,7 @@
       <tr>
         {% for name in films.dtypes.index %} {% if name == 'title' %}
         <td>
-          <a href="/movie/{{i+1}}" class="btn-link text-decoration-none"
+          <a href="/movies/{{i+1}}" class="btn-link text-decoration-none"
             >{{ films.loc[i, name] }}</a
           >
         </td>

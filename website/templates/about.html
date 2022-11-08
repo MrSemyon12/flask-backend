@@ -7,14 +7,20 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/about.css') }}"
     />
-    <link rel="icon" href="static/images/carrots.png" />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='images/carrots.png') }}"
+    />
   </head>
   <body>
     <div class="backplate">
       <div class="main-box">
         <div class="flexbox">
           <div class="left">
-            <img src="static/images/photo.png" style="width: 225px" />
+            <img
+              src="{{ url_for('static', filename='images/photo.png') }}"
+              style="width: 225px"
+            />
           </div>
           <div class="right">
             <h3 style="text-transform: capitalize">

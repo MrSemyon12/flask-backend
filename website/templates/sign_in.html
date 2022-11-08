@@ -1,5 +1,5 @@
-{% extends 'base.html' %} {% block title %}Sign-In{% endblock %} {% block body
-%}
+{% extends 'base.html' %} {% block title %}Авторизация{% endblock %} {% block
+body %}
 <div class="container">
   <div class="row mt-5">
     <div class="col">
@@ -19,12 +19,12 @@
 
         <div class="form-group mt-4 d-flex justify-content-between">
           <button type="submit" class="btn btn-primary">Войти</button>
-          <a class="btn btn-outline-success" href="/sign-up">Регистрация</a>
+          <a
+            class="btn btn-outline-success"
+            href="{{ url_for('auth.sign_up') }}"
+            >Регистрация</a
+          >
         </div>
-
-        {% if error %}
-        <p class="text-danger mt-2">Не верное имя пользователя или пароль</p>
-        {% endif %}
       </form>
     </div>
   </div>

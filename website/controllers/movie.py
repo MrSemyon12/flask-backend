@@ -1,5 +1,6 @@
 from models.movie_model import get_film, get_film_director, get_film_actors, get_reviews
 from flask import render_template
+from flask_login import login_required, current_user
 from app import app
 
 from utils import get_db_connection
