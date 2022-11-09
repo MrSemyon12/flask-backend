@@ -20,7 +20,7 @@ con = sqlite3.connect('website/filmoteka.db')
 df = pd.read_sql('''
     SELECT *
     FROM
-        director       
+        actor       
 ''', con)
 
 print(df)

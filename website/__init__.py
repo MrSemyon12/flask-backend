@@ -2,10 +2,12 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
+import sqlite3
 
 db = SQLAlchemy()
 basedir = path.abspath(path.dirname(__file__))
 DB_NAME = 'filmoteka.db'
+conn = sqlite3.connect(path.join(basedir, DB_NAME), check_same_thread=False)
 
 
 def create_app():
@@ -25,7 +27,7 @@ def create_app():
     app.register_blueprint(games, url_prefix='/games')
     app.register_blueprint(movies, url_prefix='/movies')
 
-    from .models import User
+    from .models.user import User
 
     with app.app_context():
         db.create_all()

@@ -2,11 +2,11 @@
 body %}
 
 <div class="container table-responsive mt-5">
-  {% set n = len(films) %}
+  {% set n = len(movies) %}
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        {% for name in films.dtypes.index %} {% if name != id %}
+        {% for name in movies.dtypes.index %} {% if name != id %}
         <th>{{ name }}</th>
         {% endif %} {% endfor %}
       </tr>
@@ -14,14 +14,14 @@ body %}
     <tbody>
       {% for i in range(n) %}
       <tr>
-        {% for name in films.dtypes.index %} {% if name == 'title' %}
+        {% for name in movies.dtypes.index %} {% if name == 'title' %}
         <td>
           <a href="/movies/{{i+1}}" class="btn-link text-decoration-none"
-            >{{ films.loc[i, name] }}</a
+            >{{ movies.loc[i, name] }}</a
           >
         </td>
         {% else %}
-        <td>{{ films.loc[i, name] }}</td>
+        <td>{{ movies.loc[i, name] }}</td>
         {% endif %} {% endfor %}
       </tr>
       {% endfor %}

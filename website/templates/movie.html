@@ -6,14 +6,14 @@
       <div class="card">
         <div class="card-body">
           <div class="d-flex justify-content-between">
-            <h1>{{ film.loc[0, 'title'] }}</h1>
-            <h1>{{ film.loc[0, 'year'] }}</h1>
+            <h1>{{ movie.loc[0, 'title'] }}</h1>
+            <h1>{{ movie.loc[0, 'year'] }}</h1>
           </div>
           <hr />
           <div class="row">
             <img
               style="width: 400px"
-              src="{{ film.loc[0, 'poster_url'] }}"
+              src="{{ movie.loc[0, 'poster_url'] }}"
               alt="no data"
             />
             <div class="col">
@@ -21,7 +21,7 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex justify-content-end">
-                      <h4>{{ film.loc[0, 'genres'].replace(',', ', ') }}</h4>
+                      <h4>{{ movie.loc[0, 'genres'].replace(',', ', ') }}</h4>
                     </div>
                   </div>
                 </div>
