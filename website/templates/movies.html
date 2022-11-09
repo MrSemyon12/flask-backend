@@ -16,7 +16,9 @@ body %}
       <tr>
         {% for name in movies.dtypes.index %} {% if name == 'title' %}
         <td>
-          <a href="/movies/{{i+1}}" class="btn-link text-decoration-none"
+          <a
+            href="/movies/{{ movies.loc[i, 'movie_id'] }}"
+            class="btn-link text-decoration-none"
             >{{ movies.loc[i, name] }}</a
           >
         </td>

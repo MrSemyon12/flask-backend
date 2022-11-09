@@ -44,7 +44,7 @@
           </div>
         </div>
         {% if user.is_authenticated %}
-        <span class="me-3">{{ user.name }}</span>
+        <span class="me-3">{{ user.user_name }}</span>
         <a class="btn btn-outline-danger" href="{{ url_for('auth.sign_out') }}"
           >Выйти</a
         >

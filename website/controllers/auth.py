@@ -13,7 +13,7 @@ def sign_in():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        user = User.query.filter_by(name=username).first()
+        user = User.query.filter_by(user_name=username).first()
 
         if user and check_password_hash(user.password, password):
             flash('Вы успешно вошли.', category='success')
@@ -39,7 +39,7 @@ def sign_up():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        user = User.query.filter_by(name=username).first()
+        user = User.query.filter_by(user_name=username).first()
 
         if len(username) < 4:
             flash(
@@ -50,7 +50,7 @@ def sign_up():
             flash(f'Имя пользователя {username} занято.', category='error')
         else:
             new_user = User(
-                name=username,
+                user_name=username,
                 password=generate_password_hash(password, method='sha256')
             )
             db.session.add(new_user)
