@@ -38,17 +38,26 @@
                   </div>
                 </div>
               </div>
-              <div class="d-flex justify-content-end mt-1">
+              <div class="row">
                 {% for i in range(len(actors)) %}
-                <div class="card">
-                  <div class="card-body">
-                    <img
-                      style="width: 100px"
-                      src="{{ actors.loc[i, 'photo_url'] }}"
-                      alt="no data"
-                    />
-                    <h4>{{ actors.loc[i, 'actor_name'] }}</h4>
-                  </div>
+                <div class="hoverable">
+                  <a
+                    class="text-decoration-none text-reset fs-4"
+                    href="/actors/{{ actors.loc[i,'actor_id'] }}"
+                  >
+                    {{ actors.loc[i, 'actor_name'] }}
+                    <div class="box">
+                      <div class="card">
+                        <div class="card-body">
+                          <img
+                            style="width: 100px"
+                            src="{{ actors.loc[i, 'photo_url'] }}"
+                            alt="no data"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </a>
                 </div>
                 {% endfor %}
               </div>

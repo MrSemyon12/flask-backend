@@ -1,0 +1,16 @@
+.hoverable {
+  cursor: pointer;
+}
+
+.hoverable:hover .box {
+  display: block;
+  position: absolute;
+}
+
+.hoverable:hover {
+  color: orange;
+}
+
+.box {
+  display: none;
+}

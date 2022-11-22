@@ -1,0 +1,23 @@
+{% extends 'base.html' %} {% block title %}Фильмы{% endblock %} {% block body %}
+
+<div class="container">
+  <div class="row mt-5">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h1>{{ actor.actor_name[0] }}</h1>
+          <hr />
+          <div class="row">
+            <img
+              style="width: 400px"
+              src="{{ actor.photo_url[0] }}"
+              alt="no data"
+            />
+            <div class="col"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

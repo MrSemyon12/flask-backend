@@ -36,7 +36,7 @@ def get_movie_director(conn, movie_id):
 
 def get_movie_actors(conn, movie_id):
     return pd.read_sql('''
-        SELECT actor_name, photo_url
+        SELECT *
         FROM
             movie
             JOIN movie_actor USING (movie_id)
