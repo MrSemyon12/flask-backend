@@ -1,87 +1,108 @@
 {% extends 'base.html' %} {% block title %}Фильмы{% endblock %} {% block body %}
 
 <div class="container">
-  <div class="row mt-5">
-    <div class="col">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between">
-            <h1>{{ movie.loc[0, 'title'] }}</h1>
-            <h1>{{ movie.loc[0, 'year'] }}</h1>
-          </div>
-          <hr />
-          <div class="row">
-            <img
-              style="width: 400px"
-              src="{{ movie.loc[0, 'poster_url'] }}"
-              alt="no data"
-            />
-            <div class="col">
-              <div class="d-flex justify-content-end">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-end">
-                      <h4>{{ movie.loc[0, 'genres'].replace(',', ', ') }}</h4>
-                    </div>
+  <div class="col mt-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <h1>{{ movie.loc[0, 'title'] }}</h1>
+          <h1>{{ movie.loc[0, 'year'] }}</h1>
+        </div>
+        <hr />
+        <div class="row">
+          <img
+            style="width: 400px"
+            src="{{ movie.loc[0, 'poster_url'] }}"
+            alt="no data"
+          />
+          <div class="col">
+            <div class="d-flex justify-content-end">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-end">
+                    <h4>{{ movie.loc[0, 'genres'].replace(',', ', ') }}</h4>
                   </div>
                 </div>
               </div>
-              <div class="d-flex justify-content-end mt-1">
-                <div class="card">
-                  <div class="card-body">
-                    <img
-                      style="width: 100px"
-                      src="{{ director.loc[0, 'photo_url'] }}"
-                      alt="no data"
-                    />
-                    <h4>{{ director.loc[0, 'director_name'] }}</h4>
-                  </div>
+            </div>
+            <div class="d-flex justify-content-end mt-1">
+              <div class="card">
+                <div class="card-body">
+                  <img
+                    style="width: 100px"
+                    src="{{ director.loc[0, 'photo_url'] }}"
+                    alt="no data"
+                  />
+                  <h4>{{ director.loc[0, 'director_name'] }}</h4>
                 </div>
               </div>
-              <div class="row">
-                {% for i in range(len(actors)) %}
-                <div class="hoverable">
-                  <a
-                    class="text-decoration-none text-reset fs-4"
-                    href="/actors/{{ actors.loc[i,'actor_id'] }}"
-                  >
-                    {{ actors.loc[i, 'actor_name'] }}
-                    <div class="box">
-                      <div class="card">
-                        <div class="card-body">
-                          <img
-                            style="width: 100px"
-                            src="{{ actors.loc[i, 'photo_url'] }}"
-                            alt="no data"
-                          />
+            </div>
+            <div class="d-flex justify-content-end mt-1">
+              <div class="card">
+                <div class="card-body">
+                  {% for i in range(len(actors)) %}
+                  <div class="hoverable">
+                    <a
+                      class="text-decoration-none text-reset fs-4"
+                      href="/actors/{{ actors.loc[i,'actor_id'] }}"
+                    >
+                      {{ actors.loc[i, 'actor_name'] }}
+                      <div class="box">
+                        <div class="card">
+                          <div class="card-body">
+                            <img
+                              style="width: 100px"
+                              src="{{ actors.loc[i, 'photo_url'] }}"
+                              alt="no data"
+                            />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </a>
+                    </a>
+                  </div>
+                  {% endfor %}
                 </div>
-                {% endfor %}
               </div>
             </div>
           </div>
         </div>
       </div>
-      {% for i in range(len(reviews)) %}
-      <div class="card mt-2">
-        <div class="card-body">
-          <div class="d-flex justify-content-between">
-            <h4>{{ reviews.loc[i, 'user_name'] }}</h4>
-            <h4>{{ reviews.loc[i, 'post_date'] }}</h4>
-          </div>
-          <hr />
-          <div class="d-flex justify-content-between">
-            <p>{{ reviews.loc[i, 'comment'] }}</p>
-            <p>Оценка: {{ reviews.loc[i, 'mark'] }}</p>
-          </div>
+    </div>
+    <div class="card mt-2">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <h2>Средняя оценка пользователей:</h2>
+          <h2>{{ movie.loc[0, 'rating'] }}</h2>
         </div>
       </div>
-      {% endfor %}
-      <div class="mb-5"></div>
     </div>
+    {% for i in range(len(reviews)) %}
+    <div class="card mt-2">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <h4>{{ reviews.loc[i, 'user_name'] }}</h4>
+          <h4>{{ reviews.loc[i, 'post_date'] }}</h4>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-between">
+          <p>{{ reviews.loc[i, 'comment'] }}</p>
+          <p>Оценка: {{ reviews.loc[i, 'mark'] }}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %} {% if user.is_authenticated %}
+    <form
+      action="/movies/{{ movie.loc[0, 'movie_id'] }}"
+      method="POST"
+      class="mt-2"
+    >
+      <div class="form-group mt-2 d-flex justify-content-between">
+        <input class="form-control" type="text" name="comment" />
+        <button type="submit" class="btn btn-primary ms-2">Отправить</button>
+      </div>
+    </form>
+    {% endif %}
+    <div class="mb-5"></div>
   </div>
 </div>
 {% endblock %}

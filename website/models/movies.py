@@ -4,7 +4,7 @@ import pandas as pd
 def get_movies(conn):
     return pd.read_sql('''
         SELECT movie_id, title, year, director_name, group_concat(DISTINCT genre_name) AS genres
-        FROM 
+        FROM
             movie
             JOIN director USING (director_id)
             JOIN movie_genre USING (movie_id)
@@ -15,9 +15,9 @@ def get_movies(conn):
 
 def get_movie(conn, movie_id):
     return pd.read_sql('''
-        SELECT title, year, poster_url, group_concat(DISTINCT genre_name) AS genres
-        FROM 
-            movie            
+        SELECT movie_id, title, year, poster_url, group_concat(DISTINCT genre_name) AS genres, rating
+        FROM
+            movie
             JOIN movie_genre USING (movie_id)
             JOIN genre USING (genre_name)
         WHERE movie_id == :id
@@ -48,9 +48,18 @@ def get_movie_actors(conn, movie_id):
 def get_reviews(conn, movie_id):
     return pd.read_sql('''
         SELECT user_name, post_date, comment, mark
-        FROM 
+        FROM
             movie
             JOIN review USING (movie_id)
             JOIN user USING (user_name)
         WHERE movie_id == :id
 ''', conn, params={'id': movie_id})
+
+
+def add_review(conn, review):
+    cursor = conn.cursor()
+    sql = 'INSERT INTO review (movie_id, user_name, comment, mark) VALUES (?, ?, ?, ?)'
+    cursor.execute(sql, review)
+    sql = 'UPDATE movie SET rating = (SELECT AVG(mark) FROM review WHERE movie_id = ?) WHERE movie_id = ?'
+    cursor.execute(sql, (review[0], review[0]))
+    conn.commit()

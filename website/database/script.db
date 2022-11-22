@@ -54,8 +54,8 @@ DROP TABLE IF EXISTS review;
 
 CREATE TABLE review (
     movie_id INTEGER,
-    user_name INTEGER,
-    post_date DATETIME,  
+    user_name VARCHAR(25),
+    post_date DATETIME DEFAULT current_timestamp,
     comment VARCHAR(255),
     mark INTEGER,
     FOREIGN KEY (movie_id) REFERENCES movie (movie_id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -244,7 +244,3 @@ INSERT INTO movie_actor (movie_id, actor_id) VALUES
 (11, 46),
 (11, 47),
 (11, 48);
-
-INSERT INTO review (movie_id, user_name, post_date, comment, mark) VALUES
-(1, 'user1', DATETIME('now'), 'Мне понравилось, хорошее кино. Всем рекомендую!', 9),
-(1, 'user2', DATETIME('now'), 'Ужасный фильм, как такое можно было снять... В пустую потратил время.', 2);
