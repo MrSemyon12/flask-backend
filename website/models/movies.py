@@ -5,10 +5,10 @@ def get_movies(conn):
     return pd.read_sql('''
         SELECT movie_id, title, year, director_name, group_concat(DISTINCT genre_name) AS genres
         FROM
-            movie
-            JOIN director USING (director_id)
-            JOIN movie_genre USING (movie_id)
-            JOIN genre USING (genre_name)
+            movies
+            JOIN directors USING (director_id)
+            JOIN movie_genres USING (movie_id)
+            JOIN genres USING (genre_name)
         GROUP BY movie_id
 ''', conn)
 
@@ -17,9 +17,9 @@ def get_movie(conn, movie_id):
     return pd.read_sql('''
         SELECT movie_id, title, year, poster_url, group_concat(DISTINCT genre_name) AS genres, rating
         FROM
-            movie
-            JOIN movie_genre USING (movie_id)
-            JOIN genre USING (genre_name)
+            movies
+            JOIN movie_genres USING (movie_id)
+            JOIN genres USING (genre_name)
         WHERE movie_id == :id
         GROUP BY movie_id
 ''', conn, params={'id': movie_id})
@@ -27,9 +27,10 @@ def get_movie(conn, movie_id):
 
 def get_movie_director(conn, movie_id):
     return pd.read_sql('''
-        SELECT director_name, photo_url
-        FROM movie
-        JOIN director USING (director_id)
+        SELECT *
+        FROM 
+            movies
+            JOIN directors USING (director_id)
         WHERE movie_id == :id
 ''', conn, params={'id': movie_id})
 
@@ -38,28 +39,28 @@ def get_movie_actors(conn, movie_id):
     return pd.read_sql('''
         SELECT *
         FROM
-            movie
-            JOIN movie_actor USING (movie_id)
-            JOIN actor USING (actor_id)
+            movies
+            JOIN movie_actors USING (movie_id)
+            JOIN actors USING (actor_id)
         WHERE movie_id == :id
 ''', conn, params={'id': movie_id})
 
 
-def get_reviews(conn, movie_id):
+def get_comments(conn, movie_id):
     return pd.read_sql('''
-        SELECT user_name, post_date, comment, mark
+        SELECT user_name, post_date, text
         FROM
-            movie
-            JOIN review USING (movie_id)
+            movies
+            JOIN comments USING (movie_id)
             JOIN user USING (user_name)
         WHERE movie_id == :id
 ''', conn, params={'id': movie_id})
 
 
-def add_review(conn, review):
+def add_comment(conn, comment):
     cursor = conn.cursor()
-    sql = 'INSERT INTO review (movie_id, user_name, comment, mark) VALUES (?, ?, ?, ?)'
-    cursor.execute(sql, review)
-    sql = 'UPDATE movie SET rating = (SELECT AVG(mark) FROM review WHERE movie_id = ?) WHERE movie_id = ?'
-    cursor.execute(sql, (review[0], review[0]))
+    sql = 'INSERT INTO comments (movie_id, user_name, text) VALUES (?, ?, ?)'
+    cursor.execute(sql, comment)
+    # sql = 'UPDATE movie SET rating = (SELECT AVG(mark) FROM review WHERE movie_id = ?) WHERE movie_id = ?'
+    # cursor.execute(sql, (review[0], review[0]))
     conn.commit()

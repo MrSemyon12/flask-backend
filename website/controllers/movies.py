@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import current_user
 from website import conn
 from website.models.movies import *
@@ -14,18 +14,18 @@ def all():
 @movies.route('/<int:id>', methods=['GET', 'POST'])
 def movie(id):
     if request.method == 'POST':
-        comment = request.form.get('comment')
-        if (comment != ''):
-            review = (id, current_user.user_name, comment, 8)
-            add_review(conn, review)
-        return redirect(f'/movies/{id}')
-    else:
-        return render_template(
-            'movie.html',
-            user=current_user,
-            movie=get_movie(conn, id),
-            director=get_movie_director(conn, id),
-            actors=get_movie_actors(conn, id),
-            reviews=get_reviews(conn, id),
-            len=len
-        )
+        text = request.form.get('comment')
+        if (text != ''):
+            comment = (id, current_user.user_name, text)
+            add_comment(conn, comment)
+        return redirect(url_for('movies.movie', id=id))
+
+    return render_template(
+        'movie.html',
+        user=current_user,
+        movie=get_movie(conn, id),
+        director=get_movie_director(conn, id),
+        actors=get_movie_actors(conn, id),
+        comments=get_comments(conn, id),
+        len=len
+    )

@@ -17,17 +17,17 @@ con.commit()
 #     FROM sqlite_schema
 #     WHERE name = 'user';
 # ''', con)
-df = pd.read_sql('''
-    SELECT *
-    FROM review
-    ''', con)
 # df = pd.read_sql('''
-#     SELECT name
-#     FROM
-#         sqlite_schema
-#     WHERE
-#         type ='table' AND name NOT LIKE 'sqlite_%';
-# ''', con)
+#     SELECT *
+#     FROM review
+#     ''', con)
+df = pd.read_sql('''
+    SELECT name
+    FROM
+        sqlite_schema
+    WHERE
+        type ='table' AND name NOT LIKE 'sqlite_%';
+''', con)
 
 print(df)
 

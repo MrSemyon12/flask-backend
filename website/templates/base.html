@@ -24,7 +24,7 @@
       integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
       crossorigin="anonymous"
     ></script>
-    <title>{% block title %}{% endblock %}</title>
+    <title>Фильмотека</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg bg-light fs-5">
@@ -42,9 +42,12 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-link" href="/movies">Фильмы</a>
-            <a class="nav-link" href="/reviews">Отзывы</a>
-            <a class="nav-link" href="/directors">Режиссеры</a>
+            <a class="nav-link" href="{{ url_for('movies.all') }}">Фильмы</a>
+            <a class="nav-link" href="">Статистика</a>
+            <a class="nav-link" href="">Закладки</a>
+            <a class="nav-link" href="">Рекомендации</a>
+            <a class="nav-link" href="">Случайный фильм</a>
+            <a class="nav-link" href="">Поиск</a>
           </div>
         </div>
         {% if user.is_authenticated %}
