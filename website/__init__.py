@@ -6,7 +6,7 @@ import sqlite3
 
 db = SQLAlchemy()
 basedir = path.abspath(path.dirname(__file__))
-DB_NAME = 'filmoteka.db'
+DB_NAME = 'db.sqlite3'
 conn = sqlite3.connect(path.join(basedir, DB_NAME), check_same_thread=False)
 
 
@@ -14,7 +14,7 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'sdfafeqfawaqq'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
-        path.join(basedir, DB_NAME)
+                                            path.join(basedir, DB_NAME)
     db.init_app(app)
 
     from .controllers.auth import auth
@@ -27,7 +27,6 @@ def create_app():
     app.register_blueprint(sreview, url_prefix='/')
     app.register_blueprint(games, url_prefix='/games')
     app.register_blueprint(movies, url_prefix='/movies')
-    app.register_blueprint(actors, url_prefix='/actors')
 
     from .models.user import User
 
