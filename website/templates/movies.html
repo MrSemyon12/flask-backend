@@ -1,35 +1,29 @@
 {% extends 'base.html' %}
 {% block body %}
-<div class="container table-responsive mt-5">
-  {% set n = len(movies) %}
-  <table class="table table-bordered table-hover">
-    <thead>
-      <tr>
-        {% for name in movies.dtypes.index %}
-          {% if name != 'poster_url' %}
-            <th>{{ name }}</th>
-          {% endif %}
-        {% endfor %}
-      </tr>
-    </thead>
-    <tbody>
-      {% for i in range(n) %}
-        <tr>
-          {% for name in movies.dtypes.index %}
-            {% if name == 'title' %}
-              <td>
-                <a
-                  href="/movies/{{ movies.loc[i, 'movie_id'] }}"
-                  class="btn-link text-decoration-none"
-                  >{{ movies.loc[i, name] }}</a>
-              </td>
-            {% elif name != 'poster_url' %}
-              <td>{{ movies.loc[i, name] }}</td>
-            {% endif %}
-          {% endfor %}
-        </tr>
+<div class="album py-5 bg-light">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-3 row-cols-md-5 g-3">
+      {% set n = len(movies) %}
+      {% for i in range(n) %}        
+          <div class="col">
+            <div class="card shadow-sm">
+              <a href="{{ url_for('movies.movie_by_id', movie_id=movies.loc[i, 'movie_id']) }}">
+                <img src="{{ movies.loc[i, 'poster_url'] }}" alt="no_picture.png" class="card-img-top"/>
+              </a>
+              <div class="card-body">
+                <h5 class="card-text">{{ movies.loc[i, 'title'] }}, {{ movies.loc[i, 'year'] }}</h5>
+                <p class="card-text">{{ movies.loc[i, 'genres'].replace(',', ', ') }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">
+                    <img src="{{ url_for('static', filename='images/plus.png') }}" width="15" height="15" class="mb-1">
+                  </button>
+                  <span>{{ movies.loc[i, 'rating'] }} / 10</span>
+                </div>
+              </div>
+            </div>
+          </div>               
       {% endfor %}
-    </tbody>
-  </table>
+    </div>
+  </div>
 </div>
 {% endblock %}

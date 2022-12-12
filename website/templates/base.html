@@ -27,35 +27,20 @@
     <title>Фильмотека</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg bg-light fs-5">
+    <nav class="navbar navbar-expand-lg fs-5">      
       <div class="container">
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-link" href="{{ url_for('movies.all_movies') }}">Фильмы</a>
-            <a class="nav-link" href="">Статистика</a>
-            <a class="nav-link" href="">Закладки</a>
-            <a class="nav-link" href="">Рекомендации</a>
-            <a class="nav-link" href="">Случайный фильм</a>
-            <a class="nav-link" href="">Поиск</a>
-          </div>
-        </div>
-        {% if user.is_authenticated %}
-          <span class="me-3">{{ user.user_name }}</span>
-          <a class="btn btn-outline-danger" href="{{ url_for('auth.sign_out') }}">Выйти</a>
-        {% else %}
-          <a class="btn btn-outline-success" href="{{ url_for('auth.sign_in') }}">Войти</a>
-        {% endif %}
+        <a class="navbar-brand" href="{{ url_for('movies.all_movies') }}">
+          <img src="{{ url_for('static', filename='images/film.png') }}" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+          Фильмотека
+        </a>
+        <div class="d-flex">
+          {% if user.is_authenticated %}
+            <span class="me-3">{{ user.user_name }}</span>
+            <a class="btn btn-outline-danger" href="{{ url_for('auth.sign_out') }}">Выйти</a>
+          {% else %}
+            <a class="btn btn-outline-success" href="{{ url_for('auth.sign_in') }}">Войти</a>
+          {% endif %}
+        </div>        
       </div>
     </nav>
     {% with messages = get_flashed_messages(with_categories=true) %}
