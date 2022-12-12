@@ -18,7 +18,7 @@ def sign_in():
         if user and check_password_hash(user.password, password):
             flash('Вы успешно вошли.', category='success')
             login_user(user, remember=True)
-            return redirect(url_for('movies.all'))
+            return redirect(url_for('movies.all_movies'))
         else:
             flash('Не верные имя пользователя или пароль.', category='error')
 
@@ -30,7 +30,7 @@ def sign_in():
 def sign_out():
     logout_user()
     flash('Вы успешно вышли.', category='success')
-    return redirect(url_for('movies.all'))
+    return redirect(url_for('movies.all_movies'))
 
 
 @auth.route('/sign-up', methods=['GET', 'POST'])

@@ -1,29 +1,33 @@
-{% extends 'base.html' %}{% block body %}
+{% extends 'base.html' %}
+{% block body %}
 <div class="container table-responsive mt-5">
   {% set n = len(movies) %}
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        {% for name in movies.dtypes.index %} {% if name != id %}
-        <th>{{ name }}</th>
-        {% endif %} {% endfor %}
+        {% for name in movies.dtypes.index %}
+          {% if name != 'poster_url' %}
+            <th>{{ name }}</th>
+          {% endif %}
+        {% endfor %}
       </tr>
     </thead>
     <tbody>
       {% for i in range(n) %}
-      <tr>
-        {% for name in movies.dtypes.index %} {% if name == 'title' %}
-        <td>
-          <a
-            href="/movies/{{ movies.loc[i, 'movie_id'] }}"
-            class="btn-link text-decoration-none"
-            >{{ movies.loc[i, name] }}</a
-          >
-        </td>
-        {% else %}
-        <td>{{ movies.loc[i, name] }}</td>
-        {% endif %} {% endfor %}
-      </tr>
+        <tr>
+          {% for name in movies.dtypes.index %}
+            {% if name == 'title' %}
+              <td>
+                <a
+                  href="/movies/{{ movies.loc[i, 'movie_id'] }}"
+                  class="btn-link text-decoration-none"
+                  >{{ movies.loc[i, name] }}</a>
+              </td>
+            {% elif name != 'poster_url' %}
+              <td>{{ movies.loc[i, name] }}</td>
+            {% endif %}
+          {% endfor %}
+        </tr>
       {% endfor %}
     </tbody>
   </table>

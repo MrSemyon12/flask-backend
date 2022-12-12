@@ -12,7 +12,7 @@ conn = sqlite3.connect(path.join(basedir, DB_NAME), check_same_thread=False)
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'sdfafeqfawaqq'
+    app.config['SECRET_KEY'] = 'sd2fa51ft3t5qfawaqq353d5wawe7&t&&iopp&997352ddafaaw92391--313145^^#@'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
                                             path.join(basedir, DB_NAME)
     db.init_app(app)
@@ -21,7 +21,6 @@ def create_app():
     from .controllers.sreview import sreview
     from .controllers.games import games
     from .controllers.movies import movies
-    from .controllers.actors import actors
 
     app.register_blueprint(auth, url_prefix='/')
     app.register_blueprint(sreview, url_prefix='/')
@@ -38,7 +37,7 @@ def create_app():
     login_manager.init_app(app)
 
     @login_manager.user_loader
-    def load_user(id):
-        return (User.query.get(int(id)))
+    def load_user(user_id):
+        return User.query.get(int(user_id))
 
     return app

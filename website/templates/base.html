@@ -42,7 +42,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-link" href="{{ url_for('movies.all') }}">Фильмы</a>
+            <a class="nav-link" href="{{ url_for('movies.all_movies') }}">Фильмы</a>
             <a class="nav-link" href="">Статистика</a>
             <a class="nav-link" href="">Закладки</a>
             <a class="nav-link" href="">Рекомендации</a>
@@ -51,28 +51,28 @@
           </div>
         </div>
         {% if user.is_authenticated %}
-        <span class="me-3">{{ user.user_name }}</span>
-        <a class="btn btn-outline-danger" href="{{ url_for('auth.sign_out') }}"
-          >Выйти</a
-        >
+          <span class="me-3">{{ user.user_name }}</span>
+          <a class="btn btn-outline-danger" href="{{ url_for('auth.sign_out') }}">Выйти</a>
         {% else %}
-        <a class="btn btn-outline-success" href="{{ url_for('auth.sign_in') }}"
-          >Войти</a
-        >
+          <a class="btn btn-outline-success" href="{{ url_for('auth.sign_in') }}">Войти</a>
         {% endif %}
       </div>
     </nav>
-    {% with messages = get_flashed_messages(with_categories=true) %} {% if
-    messages %} {% for category, message in messages %} {% if category ==
-    'error' %}
-    <div class="alert alert-danger" role="alert">
-      <div class="container d-flex justify-content-between">{{ message }}</div>
-    </div>
-    {% else %}
-    <div class="alert alert-success" role="alert">
-      <div class="container d-flex justify-content-between">{{ message }}</div>
-    </div>
-    {% endif %} {% endfor %} {% endif %} {% endwith %} {% block body %}{%
-    endblock %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          {% if category == 'error' %}
+            <div class="alert alert-danger" role="alert">
+              <div class="container d-flex justify-content-between">{{ message }}</div>
+            </div>
+          {% else %}
+            <div class="alert alert-success" role="alert">
+              <div class="container d-flex justify-content-between">{{ message }}</div>
+            </div>
+          {% endif %}
+        {% endfor %} 
+      {% endif %}
+    {% endwith %}
+    {% block body %}{% endblock %}
   </body>
 </html>
