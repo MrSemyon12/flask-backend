@@ -20,11 +20,8 @@ def home_personal():
 @home.route('/<int:movie_id>', methods=['POST'])
 @login_required
 def add_to_watch_later(movie_id):
-    if current_user.is_authenticated:
-        add_watch_later(conn, (movie_id, current_user.user_name))
-        return redirect(url_for('movies.all_movies'))
-    else:
-        return redirect(url_for('auth.sign_in'))
+    add_watch_later(conn, (movie_id, current_user.username))
+    return redirect(url_for('home.home_personal'))
 
 
 @home.route('/movie/<int:movie_id>', methods=['GET', 'POST'])

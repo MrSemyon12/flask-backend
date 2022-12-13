@@ -10,7 +10,7 @@ def get_movies(conn):
             JOIN movie_genre USING (movie_id)
             JOIN genre USING (genre_name)
         GROUP BY movie_id
-''', conn)
+    ''', conn)
 
 
 def get_movie(conn, movie_id):
@@ -23,7 +23,7 @@ def get_movie(conn, movie_id):
             JOIN genre USING (genre_name)
         WHERE movie_id == :id
         GROUP BY movie_id
-''', conn, params={'id': movie_id})
+    ''', conn, params={'id': movie_id})
 
 
 def get_movie_director(conn, movie_id):
@@ -33,7 +33,7 @@ def get_movie_director(conn, movie_id):
             movie
             JOIN director USING (director_id)
         WHERE movie_id == :id
-''', conn, params={'id': movie_id})
+    ''', conn, params={'id': movie_id})
 
 
 def get_movie_actors(conn, movie_id):
@@ -44,7 +44,7 @@ def get_movie_actors(conn, movie_id):
             JOIN movie_actor USING (movie_id)
             JOIN actor USING (actor_id)
         WHERE movie_id == :id
-''', conn, params={'id': movie_id})
+    ''', conn, params={'id': movie_id})
 
 
 def get_comments(conn, movie_id):
@@ -55,7 +55,7 @@ def get_comments(conn, movie_id):
             JOIN comment USING (movie_id)
             JOIN user USING (username)
         WHERE movie_id == :id
-''', conn, params={'id': movie_id})
+    ''', conn, params={'id': movie_id})
 
 
 def add_comment(conn, comment):
@@ -74,10 +74,10 @@ def add_watch_later(conn, record):
     conn.commit()
 
 
-def get_watch_later(conn, user_name):
+def get_watch_later(conn, username):
     return pd.read_sql('''
         SELECT movie_id
         FROM
-            watch_later            
-        WHERE user_name == :username
-''', conn, params={'username': user_name})
+            watch_later
+        WHERE username == :username
+    ''', conn, params={'username': username})
