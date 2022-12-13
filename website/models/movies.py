@@ -49,18 +49,18 @@ def get_movie_actors(conn, movie_id):
 
 def get_comments(conn, movie_id):
     return pd.read_sql('''
-        SELECT user_name, post_date, text
+        SELECT username, post_date, text
         FROM
             movie
             JOIN comment USING (movie_id)
-            JOIN user USING (user_name)
+            JOIN user USING (username)
         WHERE movie_id == :id
 ''', conn, params={'id': movie_id})
 
 
 def add_comment(conn, comment):
     cursor = conn.cursor()
-    sql = 'INSERT INTO comment (movie_id, user_name, text) VALUES (?, ?, ?)'
+    sql = 'INSERT INTO comment (movie_id, username, text) VALUES (?, ?, ?)'
     cursor.execute(sql, comment)
     # sql = 'UPDATE movie SET rating = (SELECT AVG(mark) FROM review WHERE movie_id = ?) WHERE movie_id = ?'
     # cursor.execute(sql, (review[0], review[0]))
@@ -69,7 +69,7 @@ def add_comment(conn, comment):
 
 def add_watch_later(conn, record):
     cursor = conn.cursor()
-    sql = 'INSERT INTO watch_later (movie_id, user_name) VALUES (?, ?)'
+    sql = 'INSERT INTO watch_later (movie_id, username) VALUES (?, ?)'
     cursor.execute(sql, record)
     conn.commit()
 

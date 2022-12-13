@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="album py-5 bg-light">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-3 row-cols-md-5 g-3">
+      {% set n = len(movies) %}
+      {% for i in range(n) %}
+        <div class="col">
+          <div class="card shadow-sm">
+            <a href="{{ url_for('home.movie', movie_id=movies.loc[i, 'movie_id']) }}">
+              <img src="{{ movies.loc[i, 'poster_url'] }}" alt="no_picture.png" class="card-img-top"/>
+            </a>
+            <div class="card-body">
+              <h5 class="card-text">{{ movies.loc[i, 'title'] }}, {{ movies.loc[i, 'year'] }}</h5>
+              <p class="card-text">{{ movies.loc[i, 'genres'].replace(',', ', ') }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <a type="button" class="btn btn-sm btn-outline-secondary" href="{{ url_for('auth.login') }}">
+                  <img src="{{ url_for('static', filename='images/plus.png') }}" width="15" height="15" class="mb-1">
+                </a>
+                <span>{{ movies.loc[i, 'rating'] }} / 10</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

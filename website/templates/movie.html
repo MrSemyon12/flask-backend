@@ -72,34 +72,39 @@
       <div class="card-body">
         <div class="d-flex justify-content-between">
           <h2>Рейтинг фильма:</h2>
-          <h2>???</h2>
+          <h2>{{ movie.loc[0, 'rating'] }}</h2>
         </div>
       </div>
     </div>
     {% for i in range(len(comments)) %}
-    <div class="card mt-2">
-      <div class="card-body">
-        <div class="d-flex justify-content-between">
-          <h4>{{ comments.loc[i, 'user_name'] }}</h4>
-          <h4>{{ comments.loc[i, 'post_date'] }}</h4>
+      <div class="card mt-2">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <h4>{{ comments.loc[i, 'username'] }}</h4>
+            <h4>{{ comments.loc[i, 'post_date'] }}</h4>
+          </div>
+          <hr />
+          <p>{{ comments.loc[i, 'text'] }}</p>
         </div>
-        <hr />
-        <p>{{ comments.loc[i, 'text'] }}</p>
       </div>
-    </div>
-    {% endfor %} {% if user.is_authenticated %}
-    <form
-      action="/movies/{{ movie.loc[0, 'movie_id'] }}"
-      method="POST"
-      class="mt-2"
-    >
-      <div class="form-group mt-2 d-flex justify-content-between">
+    {% endfor %}
+    {% if user.is_authenticated %}
+      <form
+        action="{{ url_for('home.movie', movie_id=movie.loc[0, 'movie_id']) }}"
+        method="POST"
+        class="mt-2"
+      >
+        <div class="form-group mt-2 d-flex justify-content-between mb-5">
+          <input class="form-control" type="text" name="comment" />
+          <button type="submit" class="btn btn-primary ms-2">Отправить</button>
+        </div>
+      </form>
+    {% else %}
+      <div class="form-group mt-2 d-flex justify-content-between mb-5">
         <input class="form-control" type="text" name="comment" />
-        <button type="submit" class="btn btn-primary ms-2">Отправить</button>
+        <a type="button" class="btn btn-primary ms-2" href="{{ url_for('auth.login') }}">Отправить</a>
       </div>
-    </form>
     {% endif %}
-    <div class="mb-5"></div>
   </div>
 </div>
 {% endblock %}

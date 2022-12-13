@@ -17,15 +17,15 @@ def create_app():
                                             path.join(basedir, DB_NAME)
     db.init_app(app)
 
-    from .controllers.auth import auth
-    from .controllers.sreview import sreview
-    from .controllers.games import games
-    from .controllers.movies import movies
+    from .views.auth import auth
+    from .views.self import self
+    from .views.games import games
+    from .views.home import home
 
-    app.register_blueprint(auth, url_prefix='/')
-    app.register_blueprint(sreview, url_prefix='/')
+    app.register_blueprint(auth, url_prefix='/auth')
+    app.register_blueprint(self, url_prefix='/self')
     app.register_blueprint(games, url_prefix='/games')
-    app.register_blueprint(movies, url_prefix='/movies')
+    app.register_blueprint(home, url_prefix='/home')
 
     from .models.user import User
 
@@ -33,7 +33,7 @@ def create_app():
         db.create_all()
 
     login_manager = LoginManager()
-    login_manager.login_view = 'auth.sign_in'
+    login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
 
     @login_manager.user_loader

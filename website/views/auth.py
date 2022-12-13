@@ -7,39 +7,39 @@ from website import db
 auth = Blueprint('auth', __name__)
 
 
-@auth.route('/sign-in', methods=['GET', 'POST'])
-def sign_in():
+@auth.route('/login', methods=['GET', 'POST'])
+def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
 
-        user = User.query.filter_by(user_name=username).first()
+        user = User.query.filter_by(username=username).first()
 
         if user and check_password_hash(user.password, password):
             flash('Вы успешно вошли.', category='success')
             login_user(user, remember=True)
-            return redirect(url_for('movies.all_movies'))
+            return redirect(url_for('home.home_personal'))
         else:
             flash('Не верные имя пользователя или пароль.', category='error')
 
-    return render_template('sign_in.html', user=current_user)
+    return render_template('login.html', user=current_user)
 
 
-@auth.route('/sign-out', methods=['GET', 'POST'])
+@auth.route('/logout', methods=['GET', 'POST'])
 @login_required
-def sign_out():
+def logout():
     logout_user()
     flash('Вы успешно вышли.', category='success')
-    return redirect(url_for('movies.all_movies'))
+    return redirect(url_for('home.home_general'))
 
 
-@auth.route('/sign-up', methods=['GET', 'POST'])
-def sign_up():
+@auth.route('/register', methods=['GET', 'POST'])
+def register():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
 
-        user = User.query.filter_by(user_name=username).first()
+        user = User.query.filter_by(username=username).first()
 
         if len(username) < 4:
             flash(
@@ -50,12 +50,12 @@ def sign_up():
             flash(f'Имя пользователя {username} занято.', category='error')
         else:
             new_user = User(
-                user_name=username,
+                username=username,
                 password=generate_password_hash(password, method='sha256')
             )
             db.session.add(new_user)
             db.session.commit()
             flash('Вы успешно зарегистрировались.', category='success')
-            return redirect(url_for('auth.sign_in'))
+            return redirect(url_for('auth.login'))
 
-    return render_template('sign_up.html', user=current_user)
+    return render_template('register.html', user=current_user)

@@ -1,11 +1,12 @@
-{% extends 'base.html' %} {% block body %}
+{% extends 'base.html' %}
+{% block body %}
 <div class="container">
   <div class="row mt-5">
     <div class="col">
-      <h1>Авторизация</h1>
+      <h1>Регистрация</h1>
       <hr />
 
-      <form action="/sign-in" method="POST">
+      <form action="{{ url_for('auth.register') }}" method="POST">
         <div class="form-group">
           <label>Имя пользователя</label>
           <input class="form-control" type="text" name="username" />
@@ -16,14 +17,9 @@
           <input class="form-control" type="password" name="password" />
         </div>
 
-        <div class="form-group mt-4 d-flex justify-content-between">
-          <button type="submit" class="btn btn-primary">Войти</button>
-          <a
-            class="btn btn-outline-success"
-            href="{{ url_for('auth.sign_up') }}"
-            >Регистрация</a
-          >
-        </div>
+        <button type="submit" class="btn btn-primary mt-4">
+          Зарегистрироваться
+        </button>
       </form>
     </div>
   </div>

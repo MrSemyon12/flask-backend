@@ -29,16 +29,23 @@
   <body>
     <nav class="navbar navbar-expand-lg fs-5">      
       <div class="container">
-        <a class="navbar-brand" href="{{ url_for('movies.all_movies') }}">
-          <img src="{{ url_for('static', filename='images/film.png') }}" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+        {% if user.is_authenticated %}
+          <a class="navbar-brand" href="{{ url_for('home.home_personal') }}">            
+        {% else %}
+          <a class="navbar-brand" href="{{ url_for('home.home_general') }}">            
+        {% endif %}
+        <img
+          src="{{ url_for('static', filename='images/film.png') }}" 
+          alt="Logo" width="30" height="30" 
+          class="d-inline-block align-text-top">
           Фильмотека
-        </a>
+        </a> 
         <div class="d-flex">
           {% if user.is_authenticated %}
-            <span class="me-3">{{ user.user_name }}</span>
-            <a class="btn btn-outline-danger" href="{{ url_for('auth.sign_out') }}">Выйти</a>
+            <span class="me-3">{{ user.username }}</span>
+            <a class="btn btn-outline-danger" href="{{ url_for('auth.logout') }}">Выйти</a>
           {% else %}
-            <a class="btn btn-outline-success" href="{{ url_for('auth.sign_in') }}">Войти</a>
+            <a class="btn btn-outline-success" href="{{ url_for('auth.login') }}">Войти</a>
           {% endif %}
         </div>        
       </div>
