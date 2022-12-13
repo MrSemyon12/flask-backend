@@ -65,3 +65,19 @@ def add_comment(conn, comment):
     # sql = 'UPDATE movie SET rating = (SELECT AVG(mark) FROM review WHERE movie_id = ?) WHERE movie_id = ?'
     # cursor.execute(sql, (review[0], review[0]))
     conn.commit()
+
+
+def add_watch_later(conn, record):
+    cursor = conn.cursor()
+    sql = 'INSERT INTO watch_later (movie_id, user_name) VALUES (?, ?)'
+    cursor.execute(sql, record)
+    conn.commit()
+
+
+def get_watch_later(conn, user_name):
+    return pd.read_sql('''
+        SELECT movie_id
+        FROM
+            watch_later            
+        WHERE user_name == :username
+''', conn, params={'username': user_name})

@@ -8,7 +8,20 @@ movies = Blueprint('movies', __name__)
 
 @movies.route('/', methods=['GET'])
 def all_movies():
+    if current_user.is_authenticated:
+        watch_later = get_watch_later(conn, current_user.user_name)[
+            'movie_id'].values
+        return render_template('movies.html', user=current_user, movies=get_movies(conn), watch_later=watch_later, len=len)
     return render_template('movies.html', user=current_user, movies=get_movies(conn), len=len)
+
+
+@movies.route('/<int:movie_id>', methods=['POST'])
+def add_to_watch_later(movie_id):
+    if current_user.is_authenticated:
+        add_watch_later(conn, (movie_id, current_user.user_name))
+        return redirect(url_for('movies.all_movies'))
+    else:
+        return redirect(url_for('auth.sign_in'))
 
 
 @movies.route('/<int:movie_id>', methods=['GET', 'POST'])

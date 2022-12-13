@@ -14,9 +14,15 @@
                 <h5 class="card-text">{{ movies.loc[i, 'title'] }}, {{ movies.loc[i, 'year'] }}</h5>
                 <p class="card-text">{{ movies.loc[i, 'genres'].replace(',', ', ') }}</p>
                 <div class="d-flex justify-content-between align-items-center">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">
-                    <img src="{{ url_for('static', filename='images/plus.png') }}" width="15" height="15" class="mb-1">
-                  </button>
+                  <form action="{{ url_for('movies.add_to_watch_later', movie_id=movies.loc[i, 'movie_id']) }}" method="POST">
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">
+                      {% if movies.loc[i, 'movie_id'] in watch_later %}
+                        <img src="{{ url_for('static', filename='images/tick.png') }}" width="15" height="15" class="mb-1">
+                      {% else %}
+                        <img src="{{ url_for('static', filename='images/plus.png') }}" width="15" height="15" class="mb-1">
+                      {% endif %}
+                    </button>
+                  </form>                  
                   <span>{{ movies.loc[i, 'rating'] }} / 10</span>
                 </div>
               </div>
