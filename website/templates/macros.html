@@ -4,7 +4,7 @@
     {% for i in range(n) %}
         <div class="col">
             <div class="card shadow-sm">
-              <a href="{{ url_for('home.movie', movie_id=data.loc[i, 'movie_id']) }}">
+              <a href="{{ url_for('movie.info', movie_id=data.loc[i, 'movie_id']) }}">
                 <img src="{{ data.loc[i, 'poster_url'] }}" alt="no_picture.png" class="card-img-top"/>
               </a>
               <div class="card-body">
@@ -12,7 +12,7 @@
                 <p class="card-text">{{ data.loc[i, 'genres'].replace(',', ', ') }}</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <form 
-                    action="{{ url_for('home.watch_later', movie_id=data.loc[0, 'movie_id']) }}"
+                    action="{{ url_for('movie.watch_later', movie_id=data.loc[0, 'movie_id']) }}"
                     method="POST"
                   >
                     <button type="submit" class="btn btn-sm btn-outline-secondary">
