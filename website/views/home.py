@@ -8,7 +8,14 @@ home = Blueprint('home', __name__)
 
 @home.route('/general', methods=['GET'])
 def home_general():
-    return render_template('home_general.html', user=current_user, movies=get_movies(conn), len=len)
+    return render_template(
+        'home_general.html',
+        user=current_user,
+        top_comments_movies=get_top_comments_movies(conn),
+        top_last_time_movies=get_top_last_time_movies(conn),
+        random_movies=get_random_movies(conn),
+        len=len
+    )
 
 
 @home.route('/personal', methods=['GET'])
