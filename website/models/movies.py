@@ -115,7 +115,7 @@ def add_comment(conn, comment):
     conn.commit()
 
 
-def add_watch_later(conn, record):
+def add_to_watch_later(conn, record):
     cursor = conn.cursor()
     sql = 'INSERT INTO watch_later (movie_id, username) VALUES (?, ?)'
     cursor.execute(sql, record)

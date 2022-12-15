@@ -24,11 +24,11 @@ def home_personal():
     return render_template('home_personal.html', user=current_user, len=len)
 
 
-@home.route('/<int:movie_id>', methods=['POST'])
+@home.route('/watch_later/<int:movie_id>', methods=['POST'])
 @login_required
-def add_to_watch_later(movie_id):
-    add_watch_later(conn, (movie_id, current_user.username))
-    return redirect(url_for('home.home_personal'))
+def watch_later(movie_id):
+    add_to_watch_later(conn, (movie_id, current_user.username))
+    return redirect(request.referrer)
 
 
 @home.route('/movie/<int:movie_id>', methods=['GET', 'POST'])
