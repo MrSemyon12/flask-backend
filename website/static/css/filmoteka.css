@@ -1,16 +1,17 @@
 .hoverable {
-  cursor: pointer;
+  cursor: default;
 }
 
-.hoverable:hover .box {
-  display: block;
-  position: absolute;
+.hide {
+  display: none;
+  border-radius: 5%;
 }
 
 .hoverable:hover {
-  color: orange;
+  color: #0d6efd;
 }
 
-.box {
-  display: none;
+.hoverable:hover .hide {
+  display: block;
+  position: absolute;
 }

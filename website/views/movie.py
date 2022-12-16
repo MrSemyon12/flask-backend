@@ -12,7 +12,6 @@ def info(movie_id):
         'movie.html',
         user=current_user,
         movie=get_movie(conn, movie_id),
-        director=get_movie_director(conn, movie_id),
         actors=get_movie_actors(conn, movie_id),
         comments=get_comments(conn, movie_id),
         len=len

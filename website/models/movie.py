@@ -5,7 +5,7 @@ SAMPLE_SIZE = 6
 
 def get_movie(conn, movie_id):
     return pd.read_sql('''
-        SELECT movie_id, title, year, poster_url, director_name, group_concat(DISTINCT genre_name) AS genres, rating
+        SELECT movie_id, title, year, poster_url, director_name, photo_url, group_concat(DISTINCT genre_name) AS genres, rating, country, description, duration
         FROM
             movie
             JOIN director USING (director_id)
@@ -13,16 +13,6 @@ def get_movie(conn, movie_id):
             JOIN genre USING (genre_name)
         WHERE movie_id == :id
         GROUP BY movie_id
-    ''', conn, params={'id': movie_id})
-
-
-def get_movie_director(conn, movie_id):
-    return pd.read_sql('''
-        SELECT *
-        FROM 
-            movie
-            JOIN director USING (director_id)
-        WHERE movie_id == :id
     ''', conn, params={'id': movie_id})
 
 
