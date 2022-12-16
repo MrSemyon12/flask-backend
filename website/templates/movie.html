@@ -87,24 +87,17 @@
           <p>{{ comments.loc[i, 'text'] }}</p>
         </div>
       </div>
-    {% endfor %}
-    {% if user.is_authenticated %}
-      <form
-        action="{{ url_for('home.movie', movie_id=movie.loc[0, 'movie_id']) }}"
-        method="POST"
-        class="mt-2"
-      >
-        <div class="form-group mt-2 d-flex justify-content-between mb-5">
-          <input class="form-control" type="text" name="comment" />
-          <button type="submit" class="btn btn-primary ms-2">Отправить</button>
-        </div>
-      </form>
-    {% else %}
+    {% endfor %}    
+    <form
+      action="{{ url_for('movie.comment', movie_id=movie.loc[0, 'movie_id']) }}"
+      method="POST"
+      class="mt-2"
+    >
       <div class="form-group mt-2 d-flex justify-content-between mb-5">
-        <input class="form-control" type="text" name="comment" />
-        <a type="button" class="btn btn-primary ms-2" href="{{ url_for('auth.login') }}">Отправить</a>
+        <input class="form-control" type="text" name="text" />
+        <button type="submit" class="btn btn-primary ms-2">Отправить</button>
       </div>
-    {% endif %}
+    </form>
   </div>
 </div>
 {% endblock %}

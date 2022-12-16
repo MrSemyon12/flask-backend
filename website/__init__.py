@@ -21,11 +21,13 @@ def create_app():
     from .views.self import self
     from .views.games import games
     from .views.home import home
+    from .views.movie import movie
 
     app.register_blueprint(auth, url_prefix='/auth')
     app.register_blueprint(self, url_prefix='/self')
     app.register_blueprint(games, url_prefix='/games')
     app.register_blueprint(home, url_prefix='/home')
+    app.register_blueprint(movie, url_prefix='/movie')
 
     from .models.user import User
 

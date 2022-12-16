@@ -18,7 +18,7 @@ def login():
         if user and check_password_hash(user.password, password):
             flash('Вы успешно вошли.', category='success')
             login_user(user, remember=True)
-            return redirect(url_for('home.home_personal'))
+            return redirect(url_for('home.personal'))
         else:
             flash('Не верные имя пользователя или пароль.', category='error')
 
@@ -30,7 +30,7 @@ def login():
 def logout():
     logout_user()
     flash('Вы успешно вышли.', category='success')
-    return redirect(url_for('home.home_general'))
+    return redirect(url_for('home.general'))
 
 
 @auth.route('/register', methods=['GET', 'POST'])
@@ -56,6 +56,7 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             flash('Вы успешно зарегистрировались.', category='success')
-            return redirect(url_for('auth.login'))
+            login_user(new_user, remember=True)
+            return redirect(url_for('home.personal'))
 
     return render_template('register.html', user=current_user)

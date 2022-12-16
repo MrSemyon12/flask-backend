@@ -1,16 +1,6 @@
 import pandas as pd
 
-
-def get_movies(conn):
-    return pd.read_sql('''
-        SELECT movie_id, title, year, poster_url, director_name, group_concat(DISTINCT genre_name) AS genres, rating
-        FROM
-            movie
-            JOIN director USING (director_id)
-            JOIN movie_genre USING (movie_id)
-            JOIN genre USING (genre_name)
-        GROUP BY movie_id
-    ''', conn)
+SAMPLE_SIZE = 6
 
 
 def get_movie(conn, movie_id):
@@ -67,7 +57,7 @@ def add_comment(conn, comment):
     conn.commit()
 
 
-def add_watch_later(conn, record):
+def add_to_watch_later(conn, record):
     cursor = conn.cursor()
     sql = 'INSERT INTO watch_later (movie_id, username) VALUES (?, ?)'
     cursor.execute(sql, record)
