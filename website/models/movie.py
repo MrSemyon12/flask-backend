@@ -64,6 +64,10 @@ def add_to_watch_later(conn, record):
     conn.commit()
 
 
+def remove_from_watch_later(conn, record):
+    pass
+
+
 def get_watch_later(conn, username):
     return pd.read_sql('''
         SELECT movie_id

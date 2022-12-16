@@ -19,10 +19,17 @@ def info(movie_id):
     )
 
 
-@movie.route('/watch_later/<int:movie_id>', methods=['POST'])
+@movie.route('/add_watch_later/<int:movie_id>', methods=['POST'])
 @login_required
-def watch_later(movie_id):
+def add_watch_later(movie_id):
     add_to_watch_later(conn, (movie_id, current_user.username))
+    return redirect(request.referrer)
+
+
+@movie.route('/remove_watch_later/<int:movie_id>', methods=['POST'])
+@login_required
+def remove_watch_later(movie_id):
+    remove_from_watch_later(conn, (movie_id, current_user.username))
     return redirect(request.referrer)
 
 

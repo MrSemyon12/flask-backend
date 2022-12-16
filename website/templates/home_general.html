@@ -1,16 +1,14 @@
-{% extends 'base.html' %}
-{% block body %}
-{% import 'macros.html' as macros %}
+{% extends 'base.html' %} {% block body %} {% import 'macros.html' as macros %}
 <div class="album py-5 bg-light">
   <div class="container">
     <h1>Лучшее за последнее время</h1>
-    <hr>
+    <hr />
     {{ macros.render_album(top_last_time_movies, len) }}
     <h1 class="mt-5">Самые обсуждаемые</h1>
-    <hr>
+    <hr />
     {{ macros.render_album(top_comments_movies, len) }}
     <h1 class="mt-5">Случайная подборка</h1>
-    <hr>
+    <hr />
     {{ macros.render_album(random_movies, len) }}
   </div>
 </div>
