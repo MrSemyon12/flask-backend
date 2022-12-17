@@ -55,7 +55,10 @@ def add_to_watch_later(conn, record):
 
 
 def remove_from_watch_later(conn, record):
-    pass
+    cursor = conn.cursor()
+    sql = 'DELETE FROM watch_later WHERE movie_id == ? AND username == ?'
+    cursor.execute(sql, record)
+    conn.commit()
 
 
 def get_watch_later(conn, username):

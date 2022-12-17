@@ -1,4 +1,4 @@
-{% macro render_album(data, len) %}
+{% macro render_album(data, watch_later, user, len) %}
 <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-3">
   {% set n = len(data) %} {% for i in range(n) %}
   <div class="col">
@@ -12,11 +12,7 @@
         </h5>
         <p class="card-text">{{ data.loc[i, 'genres'].replace(',', ', ') }}</p>
         <div class="d-flex justify-content-between align-items-center">
-          <form action="{{ url_for('movie.add_watch_later', movie_id=data.loc[0, 'movie_id']) }}" method="POST">
-            <button type="submit" class="btn btn-sm btn-outline-secondary">
-              <img src="{{ url_for('static', filename='images/plus.png') }}" width="15" height="15" class="mb-1" />
-            </button>
-          </form>
+          {{ watch_later_button(data.loc[i, 'movie_id'], watch_later, user) }}
           <span>{{ data.loc[i, 'rating'] }}</span>
         </div>
       </div>
@@ -24,4 +20,28 @@
   </div>
   {% endfor %}
 </div>
+{% endmacro %}
+
+{% macro watch_later_button(movie_id, watch_later, user) %}
+{% if user.is_authenticated %}
+{% if movie_id in watch_later['movie_id'].values %}
+<form action="{{ url_for('movie.remove_watch_later', movie_id=movie_id) }}" method="POST">
+  <button type="submit" class="btn btn-sm btn-outline-secondary">
+    <img src="{{ url_for('static', filename='images/tick.png') }}" width="15" height="15" class="mb-1" />
+  </button>
+</form>
+{% else %}
+<form action="{{ url_for('movie.add_watch_later', movie_id=movie_id) }}" method="POST">
+  <button type="submit" class="btn btn-sm btn-outline-secondary">
+    <img src="{{ url_for('static', filename='images/plus.png') }}" width="15" height="15" class="mb-1" />
+  </button>
+</form>
+{% endif %}
+{% else %}
+<form action="{{ url_for('movie.add_watch_later', movie_id=movie_id) }}" method="POST">
+  <button type="submit" class="btn btn-sm btn-outline-secondary">
+    <img src="{{ url_for('static', filename='images/plus.png') }}" width="15" height="15" class="mb-1" />
+  </button>
+</form>
+{% endif %}
 {% endmacro %}
