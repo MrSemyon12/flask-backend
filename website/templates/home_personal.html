@@ -1,15 +1,15 @@
 {% extends 'base.html' %} {% block body %} {% import 'macros.html' as macros %}
 <div class="album py-5 bg-light">
   <div class="container">
-    <h1>Лучшее за последнее время</h1>
+    <h1>Ваши любимые жанры</h1>
     <hr />
-    {{ macros.render_album(top_last_time_movies, watch_later, user, len) }}
-    <h1 class="mt-5">Самые обсуждаемые</h1>
+    {{ macros.render_album(top_genres_movies, watch_later, user, len) }}
+    <h1 class="mt-5">Знакомые актёры</h1>
     <hr />
-    {{ macros.render_album(top_comments_movies, watch_later, user, len) }}
-    <h1 class="mt-5">Случайная подборка</h1>
+    {{ macros.render_album(top_actors_movies, watch_later, user, len) }}
+    <h1 class="mt-5">Фильмы этих режиссёров вам понравятся</h1>
     <hr />
-    {{ macros.render_album(random_movies, watch_later, user, len) }}
+    {{ macros.render_album(top_directors_movies, watch_later, user, len) }}
   </div>
 </div>
 {% endblock %}

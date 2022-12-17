@@ -12,6 +12,8 @@ def info(movie_id):
         'movie.html',
         user=current_user,
         movie=get_movie(conn, movie_id),
+        watch_later=get_watch_later(
+            conn, current_user.username) if current_user.is_authenticated else get_watch_later(conn, ''),
         actors=get_movie_actors(conn, movie_id),
         comments=get_comments(conn, movie_id),
         len=len

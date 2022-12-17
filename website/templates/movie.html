@@ -1,23 +1,14 @@
-{% extends 'base.html' %} {% block body %}
+{% extends 'base.html' %} {% block body %} {% import 'macros.html' as macros %}
 <div class="container mt-4">
-  <div class="row">
-    <div class="col-4 px-5">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+
+    <div class="col px-5">
       <div class="card shadow-sm">
         <img src="{{ movie.loc[0, 'poster_url'] }}" alt="no_picture.png" class="card-img-top" />
-
-        <!-- <div class="card-body">
-          <div class="d-flex justify-content-between">
-            <form action="{{ url_for('movie.add_watch_later', movie_id=movie.loc[0, 'movie_id']) }}" method="POST">
-              <button type="submit" class="btn btn-sm btn-outline-secondary">
-                <img src="{{ url_for('static', filename='images/plus.png') }}" width="15" height="15" class="mb-1" />
-              </button>
-            </form>
-          </div>
-        </div> -->
       </div>
     </div>
 
-    <div class="col-5">
+    <div class="col">
       <h2 class="mb-3">{{ movie.loc[0, 'title'] }}</h2>
       <p class="mb-5 card-text fst-italic">{{ movie.loc[0, 'description'] }}.</p>
       <h4 class="mb-0">О фильме</h4>
@@ -51,10 +42,11 @@
       </div>
       <div class="d-flex justify-content-end">
         <button type="button" class="btn btn-outline-secondary me-3">Оценить фильм</button>
-        <button type="button" class="btn btn-outline-secondary">Буду смотреть</button>
+        {{ macros.watch_later_button(movie.loc[0, 'movie_id'], watch_later, user) }}
       </div>
     </div>
-    <div class="col-3 ps-5">
+
+    <div class="col ps-5">
       <h4 class="mb-3">В главных ролях</h4>
       {% for i in range(len(actors)) %}
       <div class="hoverable">
@@ -64,23 +56,32 @@
       {% endfor %}
     </div>
   </div>
-  {% for i in range(len(comments)) %}
-  <div class="card mt-2">
-    <div class="card-body">
-      <div class="d-flex justify-content-between">
-        <h4>{{ comments.loc[i, 'username'] }}</h4>
-        <h4>{{ comments.loc[i, 'post_date'] }}</h4>
+  <div class="conteiner px-4 mt-5">
+    <h2>Комментарии пользователей</h2>
+    <hr>
+    {% if comments.empty %}
+    <p class="d-flex justify-content-center">Оставьте комментарий первым!</p>
+    {% else %}
+    {% for i in range(len(comments)) %}
+    <div class="card mt-2">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <h4>{{ comments.loc[i, 'username'] }}</h4>
+          <h4>{{ comments.loc[i, 'post_date'] }}</h4>
+        </div>
+        <hr />
+        <p>{{ comments.loc[i, 'text'] }}</p>
       </div>
-      <hr />
-      <p>{{ comments.loc[i, 'text'] }}</p>
     </div>
+    {% endfor %}
+    {% endif %}
+
+    <form action="{{ url_for('movie.comment', movie_id=movie.loc[0, 'movie_id']) }}" method="POST" class="mt-2">
+      <div class="form-group mt-2 d-flex justify-content-between mb-5">
+        <input class="form-control" type="text" name="text" />
+        <button type="submit" class="btn btn-primary ms-2">Отправить</button>
+      </div>
+    </form>
   </div>
-  {% endfor %}
-  <form action="{{ url_for('movie.comment', movie_id=movie.loc[0, 'movie_id']) }}" method="POST" class="mt-2">
-    <div class="form-group mt-2 d-flex justify-content-between mb-5">
-      <input class="form-control" type="text" name="text" />
-      <button type="submit" class="btn btn-primary ms-2">Отправить</button>
-    </div>
-  </form>
 </div>
 {% endblock %}

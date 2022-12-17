@@ -28,12 +28,14 @@
 <form action="{{ url_for('movie.remove_watch_later', movie_id=movie_id) }}" method="POST">
   <button type="submit" class="btn btn-sm btn-outline-secondary">
     <img src="{{ url_for('static', filename='images/tick.png') }}" width="15" height="15" class="mb-1" />
+    <span>Добавлено</span>
   </button>
 </form>
 {% else %}
 <form action="{{ url_for('movie.add_watch_later', movie_id=movie_id) }}" method="POST">
-  <button type="submit" class="btn btn-sm btn-outline-secondary">
+  <button type="submit" class="btn btn-sm btn-outline-success">
     <img src="{{ url_for('static', filename='images/plus.png') }}" width="15" height="15" class="mb-1" />
+    <span>Буду смотреть</span>
   </button>
 </form>
 {% endif %}
@@ -41,6 +43,7 @@
 <form action="{{ url_for('movie.add_watch_later', movie_id=movie_id) }}" method="POST">
   <button type="submit" class="btn btn-sm btn-outline-secondary">
     <img src="{{ url_for('static', filename='images/plus.png') }}" width="15" height="15" class="mb-1" />
+    <span>Буду смотреть</span>
   </button>
 </form>
 {% endif %}
