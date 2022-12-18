@@ -3,13 +3,13 @@
   <div class="container">
     <h1>Лучшее за последнее время</h1>
     <hr />
-    {{ macros.render_album(top_last_time_movies, [], user, len) }}
-    <h1 class="mt-5">Самые обсуждаемые</h1>
+    {{ macros.render_album(top_last_time_movies, watch_later, user, len) }}
+    <h1 class="mt-3">Самые обсуждаемые</h1>
     <hr />
-    {{ macros.render_album(top_comments_movies, [], user, len) }}
-    <h1 class="mt-5">Случайная подборка</h1>
+    {{ macros.render_album(top_comments_movies, watch_later, user, len) }}
+    <h1 class="mt-3">Случайная подборка</h1>
     <hr />
-    {{ macros.render_album(random_movies, [], user, len) }}
+    {{ macros.render_album(random_movies, watch_later, user, len) }}
   </div>
 </div>
 {% endblock %}

@@ -63,10 +63,12 @@ def remove_from_watch_later(conn, record):
 
 def get_watch_later(conn, username):
     return pd.read_sql('''
-        SELECT movie_id
+        SELECT movie_id, title, year, poster_url, rating, group_concat(DISTINCT genre_name) AS genres
         FROM
-            watch_later
+            movie
+            JOIN movie_genre USING (movie_id)
+            JOIN watch_later USING (movie_id)
         WHERE username == :username
+        GROUP BY movie_id
+        ORDER BY post_date DESC
     ''', conn, params={'username': username})
-
-

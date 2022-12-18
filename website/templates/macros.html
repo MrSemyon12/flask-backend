@@ -24,6 +24,14 @@
 
 {% macro watch_later_button(movie_id, watch_later, user) %}
 {% if user.is_authenticated %}
+{% if watch_later.empty %}
+<form action="{{ url_for('movie.add_watch_later', movie_id=movie_id) }}" method="POST">
+  <button type="submit" class="btn btn-sm btn-outline-success">
+    <img src="{{ url_for('static', filename='images/plus.png') }}" width="15" height="15" class="mb-1" />
+    <span>Буду смотреть</span>
+  </button>
+</form>
+{% else %}
 {% if movie_id in watch_later['movie_id'].values %}
 <form action="{{ url_for('movie.remove_watch_later', movie_id=movie_id) }}" method="POST">
   <button type="submit" class="btn btn-sm btn-outline-secondary">
@@ -38,6 +46,7 @@
     <span>Буду смотреть</span>
   </button>
 </form>
+{% endif %}
 {% endif %}
 {% else %}
 <form action="{{ url_for('movie.add_watch_later', movie_id=movie_id) }}" method="POST">

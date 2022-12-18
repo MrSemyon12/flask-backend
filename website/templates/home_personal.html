@@ -1,15 +1,25 @@
 {% extends 'base.html' %} {% block body %} {% import 'macros.html' as macros %}
 <div class="album py-5 bg-light">
   <div class="container">
-    <h1>Ваши любимые жанры</h1>
+    <h1>Любимые жанры</h1>
     <hr />
     {{ macros.render_album(top_genres_movies, watch_later, user, len) }}
-    <h1 class="mt-5">Знакомые актёры</h1>
+
+    {% if not top_actors_movies.empty %}
+    <h1 class="mt-3">Знакомые актёры</h1>
     <hr />
     {{ macros.render_album(top_actors_movies, watch_later, user, len) }}
-    <h1 class="mt-5">Фильмы этих режиссёров вам понравятся</h1>
+    {% endif %}
+
+    {% if not top_directors_movies.empty %}
+    <h1 class="mt-3">Режиссёры, которых вы любите</h1>
     <hr />
     {{ macros.render_album(top_directors_movies, watch_later, user, len) }}
+    {% endif %}
+
+    <h1 class="mt-3">Вы хотели посмотреть</h1>
+    <hr />
+    {{ macros.render_album(watch_later, watch_later, user, len) }}
   </div>
 </div>
 {% endblock %}

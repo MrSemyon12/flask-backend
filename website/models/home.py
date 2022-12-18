@@ -1,6 +1,9 @@
 import pandas as pd
 
 SAMPLE_SIZE = 6
+TOP_GENRES = 4
+TOP_ACTORS = 32
+TOP_DIRECTORS = 16
 
 
 def get_top_comments_movies(conn):
@@ -14,10 +17,10 @@ def get_top_comments_movies(conn):
                     movie
                     LEFT JOIN comment USING (movie_id)
                 GROUP BY movie_id
-                ORDER BY cnt DESC, rating DESC      
+                ORDER BY cnt DESC, rating DESC
                 LIMIT {SAMPLE_SIZE}
             )
-            JOIN movie_genre USING (movie_id)            
+            JOIN movie_genre USING (movie_id)
         GROUP BY movie_id
         ORDER BY cnt DESC, rating DESC
     ''', conn)
@@ -50,8 +53,8 @@ def get_random_movies(conn):
 
 
 def get_top_genres_movies(conn, username):
-    '''Фильмы трех самых популярных жанров пользователя из "смотреть позже", исключая фильмы из "смотреть позже".'''
-    return pd.read_sql('''
+    '''Фильмы самых популярных жанров пользователя из "смотреть позже".'''
+    return pd.read_sql(f'''
         SELECT DISTINCT movie_id, title, year, poster_url, rating, group_concat(DISTINCT genre_name) AS genres
         FROM
             movie
@@ -61,13 +64,12 @@ def get_top_genres_movies(conn, username):
                 FROM (
                     SELECT genre_name, count(movie_id) as cnt
                     FROM
-                        movie
-                        JOIN watch_later USING (movie_id)
+                        watch_later
                         JOIN movie_genre USING (movie_id)
                     WHERE username == :username
                     GROUP BY genre_name
                     ORDER BY cnt DESC
-                    LIMIT 3
+                    LIMIT {TOP_GENRES}
                 )
         )
         AND movie_id NOT IN (
@@ -78,15 +80,75 @@ def get_top_genres_movies(conn, username):
         )
         GROUP BY movie_id
         ORDER BY RANDOM()
-        LIMIT 6
+        LIMIT {SAMPLE_SIZE}
 ''', conn, params={'username': username})
 
 
 def get_top_actors_movies(conn, username):
-    '''Фильмы с участием десяти самых популярных актеров пользователя в случаном порядке.'''
-    pass
+    '''Фильмы с участием самых популярных актеров пользователя.'''
+    return pd.read_sql(f'''
+        SELECT DISTINCT movie_id, title, year, poster_url, rating, group_concat(DISTINCT genre_name) AS genres
+        FROM
+            movie
+            JOIN movie_genre USING (movie_id)
+        WHERE movie_id IN (
+            SELECT movie_id
+            FROM
+                movie
+                JOIN movie_actor USING (movie_id)                
+            WHERE actor_id IN (
+                SELECT actor_id
+                    FROM (
+                        SELECT actor_id, count(movie_id) as cnt
+                        FROM
+                            watch_later
+                            JOIN movie_actor USING (movie_id)
+                        WHERE username == :username
+                        GROUP BY actor_id
+                        ORDER BY cnt DESC
+                        LIMIT {TOP_ACTORS}
+                    )
+            )        
+        )
+        AND movie_id NOT IN (
+            SELECT movie_id
+            FROM
+                watch_later
+            WHERE username == :username
+        )  
+        GROUP BY movie_id
+        ORDER BY RANDOM()
+        LIMIT {SAMPLE_SIZE}
+''', conn, params={'username': username})
 
 
 def get_top_directors_movies(conn, username):
-    '''Фильмы пяти самых популярных режиссеров пользователя, исключая фильмы из "смотреть позже".'''
-    pass
+    '''Фильмы самых популярных режиссеров пользователя, исключая фильмы из "смотреть позже".'''
+    return pd.read_sql(f'''
+        SELECT DISTINCT movie_id, title, year, poster_url, rating, group_concat(DISTINCT genre_name) AS genres
+        FROM
+            movie
+            JOIN movie_genre USING (movie_id)
+        WHERE director_id IN (
+            SELECT director_id
+                FROM (
+                    SELECT director_id, count(movie_id) as cnt
+                    FROM
+                        watch_later
+                        JOIN movie USING (movie_id)
+                    WHERE username == :username
+                    GROUP BY director_id
+                    ORDER BY cnt DESC
+                    LIMIT {TOP_DIRECTORS}
+                )
+        )
+        AND movie_id NOT IN (
+            SELECT movie_id
+            FROM
+                watch_later
+            WHERE username == :username
+        )
+        GROUP BY movie_id
+        ORDER BY RANDOM()
+        LIMIT {SAMPLE_SIZE}
+''', conn, params={'username': username})

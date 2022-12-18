@@ -19,23 +19,19 @@
 <body>
   <nav class="navbar navbar-expand-lg fs-5">
     <div class="container">
-      {% if user.is_authenticated %}
-      <a class="navbar-brand" href="{{ url_for('home.personal') }}">
+      <a class="navbar-brand" href="{{ url_for('home.index') }}">
+        <img src="{{ url_for('static', filename='images/film.png') }}" alt="Logo" width="30" height="30"
+          class="d-inline-block align-text-top">
+        Фильмотека
+      </a>
+      <div class="d-flex">
+        {% if user.is_authenticated %}
+        <span class="me-3">{{ user.username }}</span>
+        <a class="btn btn-outline-danger" href="{{ url_for('auth.logout') }}">Выйти</a>
         {% else %}
-        <a class="navbar-brand" href="{{ url_for('home.general') }}">
-          {% endif %}
-          <img src="{{ url_for('static', filename='images/film.png') }}" alt="Logo" width="30" height="30"
-            class="d-inline-block align-text-top">
-          Фильмотека
-        </a>
-        <div class="d-flex">
-          {% if user.is_authenticated %}
-          <span class="me-3">{{ user.username }}</span>
-          <a class="btn btn-outline-danger" href="{{ url_for('auth.logout') }}">Выйти</a>
-          {% else %}
-          <a class="btn btn-outline-success" href="{{ url_for('auth.login') }}">Войти</a>
-          {% endif %}
-        </div>
+        <a class="btn btn-outline-success" href="{{ url_for('auth.login') }}">Войти</a>
+        {% endif %}
+      </div>
     </div>
   </nav>
   {% with messages = get_flashed_messages(with_categories=true) %}
