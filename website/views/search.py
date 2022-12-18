@@ -18,6 +18,7 @@ def index():
             found=find_pattern(conn, pattern=request.form.get('pattern')),
             prev_pat=request.form.get('pattern'),
             watch_later=get_watch_later(conn, current_user.username),
+            round=round,
             len=len
         )
     return render_template(
@@ -26,5 +27,6 @@ def index():
         found=find_pattern(conn, pattern=request.form.get('pattern')),
         prev_pat=request.form.get('pattern'),
         watch_later=pd.DataFrame(),
+        round=round,
         len=len
     )

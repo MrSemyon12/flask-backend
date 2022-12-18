@@ -72,3 +72,50 @@ def get_watch_later(conn, username: str):
         GROUP BY movie_id
         ORDER BY post_date DESC
     ''', conn, params={'username': username})
+
+
+def add_new_mark(conn, record):
+    cursor = conn.cursor()
+    sql = 'INSERT INTO mark (movie_id, username, value) VALUES (?, ?, ?)'
+    cursor.execute(sql, record)
+    conn.commit()
+
+
+def update_old_mark(conn, record):
+    cursor = conn.cursor()
+    sql = '''
+        UPDATE mark
+        SET
+            value = ?
+        WHERE movie_id == ? AND username == ?
+    '''
+    cursor.execute(sql, record)
+    conn.commit()
+
+
+def remove_from_mark(conn, record):
+    cursor = conn.cursor()
+    sql = 'DELETE FROM mark WHERE movie_id == ? AND username == ?'
+    cursor.execute(sql, record)
+    conn.commit()
+
+
+def get_mark(conn, movie_id: int, username: str):
+    return pd.read_sql('''
+        SELECT *
+        FROM
+            mark
+        WHERE username == :username AND movie_id == :movie_id        
+    ''', conn, params={'username': username, 'movie_id': movie_id})
+
+
+def update_rating(conn, movie_id: int):
+    cursor = conn.cursor()
+    sql = '''
+        UPDATE movie
+        SET
+            rating = (SELECT AVG(value) FROM mark WHERE movie_id == ?)
+        WHERE movie_id == ?
+    '''
+    cursor.execute(sql, (movie_id, movie_id))
+    conn.commit()

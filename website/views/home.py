@@ -12,26 +12,27 @@ def index():
     if current_user.is_authenticated:
         watch_later = get_watch_later(conn, current_user.username)
         if len(watch_later) < 6:
-            return general()
+            return general(watch_later)
         else:
-            return personal()
+            return personal(watch_later)
     else:
-        return general()
+        return general(pd.DataFrame())
 
 
-def general():
+def general(watch_later):
     return render_template(
         'home_general.html',
         user=current_user,
         top_comments_movies=get_top_comments_movies(conn),
         top_last_time_movies=get_top_last_time_movies(conn),
         random_movies=get_random_movies(conn),
-        watch_later=pd.DataFrame(),
+        watch_later=watch_later,
+        round=round,
         len=len
     )
 
 
-def personal():
+def personal(watch_later):
     return render_template(
         'home_personal.html',
         user=current_user,
@@ -41,6 +42,7 @@ def personal():
             conn, current_user.username),
         top_directors_movies=get_top_directors_movies(
             conn, current_user.username),
-        watch_later=get_watch_later(conn, current_user.username),
+        watch_later=watch_later,
+        round=round,
         len=len
     )

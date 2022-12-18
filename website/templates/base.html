@@ -17,16 +17,15 @@
 </head>
 
 <body class="bg-light">
-  <nav class="navbar navbar-expand-lg fs-5">
+  <nav class="navbar navbar-expand-lg fs-5 bg-secondary bg-opacity-25">
     <div class="container">
-      <a class="navbar-brand" href="{{ url_for('home.index') }}">
-        <img src="{{ url_for('static', filename='images/film.png') }}" alt="Logo" width="30" height="30"
-          class="d-inline-block align-text-top">
+      <a class="navbar-brand d-flex align-items-center fw-semibold fs-3" href="{{ url_for('home.index') }}">
+        <img src="{{ url_for('static', filename='images/film.png') }}" alt="Logo" width="30" height="30" class="me-2">
         Фильмотека
       </a>
-      <div class="d-flex">
-        {% if user.is_authenticated %}
-        <span class="me-3">{{ user.username }}</span>
+      <div class="d-flex align-items-center">
+        {% if current_user.is_authenticated %}
+        <span class="me-3 fw-semibold fs-4 pb-2">{{ current_user.username }}</span>
         <a class="btn btn-outline-danger" href="{{ url_for('auth.logout') }}">Выйти</a>
         {% else %}
         <a class="btn btn-outline-success" href="{{ url_for('auth.login') }}">Войти</a>

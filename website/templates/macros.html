@@ -1,4 +1,4 @@
-{% macro render_album(data, watch_later, user, len) %}
+{% macro render_album(data, watch_later, user, round, len) %}
 <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-3">
   {% set n = len(data) %} {% for i in range(n) %}
   <div class="col">
@@ -13,7 +13,7 @@
         <p class="card-text">{{ data.loc[i, 'genres'].replace(',', ', ') }}</p>
         <div class="d-flex justify-content-between align-items-center">
           {{ watch_later_button(data.loc[i, 'movie_id'], watch_later, user) }}
-          <span>{{ data.loc[i, 'rating'] }}</span>
+          <span>{{ round(data.loc[i, 'rating'], 1) }}</span>
         </div>
       </div>
     </div>
@@ -63,10 +63,57 @@
   <input class="form-control me-2 fs-5 ps-4" type="search"
     placeholder="Поиск по названию, жанру, актёру, режиссёру, стране и году" aria-label="Search" name="pattern"
     value="{{ prev_pat }}">
-  <button type="submit" class="btn btn-outline-secondary">
+  <button class="btn btn-outline-secondary">
     <img src="{{ url_for('static', filename='images/search.png') }}" alt="no_picture.png" width="20" height="20"
       class="mb-1" />
     Искать
   </button>
 </form>
+{% endmacro %}
+
+{% macro mark_button(user, movie_id, mark) %}
+{% if user.is_authenticated %}
+{% if mark.empty %}
+<a class="btn btn-sm btn-outline-success me-3 dropdown-toggle" data-bs-toggle="dropdown" role="button">
+  Оценить фильм
+</a>
+<ul class="dropdown-menu">
+  {% for i in range(1, 11) %}
+  <li>
+    <form action="{{ url_for('movie.add_mark', movie_id=movie_id, mark=i) }}" method="POST">
+      <button type="submit" class="dropdown-item">
+        {{ i }}
+      </button>
+    </form>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<a class="btn btn-sm btn-outline-secondary me-3 dropdown-toggle" data-bs-toggle="dropdown" role="button">
+  Ваша оценка {{ mark.loc[0, 'value'] }}
+</a>
+<ul class="dropdown-menu">
+  {% for i in range(1, 11) %}
+  <li>
+    <form action="{{ url_for('movie.update_mark', movie_id=movie_id, mark=i) }}" method="POST">
+      <button type="submit" class="dropdown-item">
+        {{ i }}
+      </button>
+    </form>
+  </li>
+  {% endfor %}
+  <li>
+    <form action="{{ url_for('movie.remove_mark', movie_id=movie_id) }}" method="POST">
+      <button type="submit" class="dropdown-item">
+        Удалить оценку
+      </button>
+    </form>
+  </li>
+</ul>
+{% endif %}
+{% else %}
+<a type="button" class="btn btn-sm btn-outline-secondary me-3 dropdown-toggle" href="{{ url_for('auth.login') }}">
+  Оценить фильм
+</a>
+{% endif %}
 {% endmacro %}

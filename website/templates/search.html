@@ -6,7 +6,7 @@
     <div class="container">
         <h1>По вашему запросу надено {{ len(found) }} совпадений</h1>
         <hr />
-        {{ macros.render_album(found, watch_later, user, len) }}
+        {{ macros.render_album(found, watch_later, user, round, len) }}
     </div>
 </div>
 {% endblock %}

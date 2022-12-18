@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% block body %} {% import 'macros.html' as macros %}
-<div class="container mt-4">
+<div class="container mt-5">
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
 
     <div class="col px-5">
@@ -38,11 +38,15 @@
       </div>
       <div class="d-flex justify-content-between">
         <div class="mb-1">Рейтинг</div>
-        <div class="mb-5">{{ movie.loc[0, 'rating'] }}</div>
+        {% if movie.loc[0, 'rating'] == None %}
+        <div class="mb-5">Нет оценок</div>
+        {% else %}
+        <div class="mb-5">{{ round(movie.loc[0, 'rating'], 1) }}</div>
+        {% endif %}
       </div>
       <div class="d-flex justify-content-end">
-        <button type="button" class="btn btn-outline-secondary me-3">Оценить фильм</button>
-        {{ macros.watch_later_button(movie.loc[0, 'movie_id'], watch_later, user) }}
+        {{ macros.mark_button(current_user, movie.loc[0, 'movie_id'], mark) }}
+        {{ macros.watch_later_button(movie.loc[0, 'movie_id'], watch_later, current_user) }}
       </div>
     </div>
 
@@ -63,14 +67,14 @@
     <p class="d-flex justify-content-center">Оставьте комментарий первым!</p>
     {% else %}
     {% for i in range(len(comments)) %}
-    <div class="card mt-2">
+    <div class="card mt-2 px-5">
       <div class="card-body">
         <div class="d-flex justify-content-between">
           <h4>{{ comments.loc[i, 'username'] }}</h4>
           <h4>{{ comments.loc[i, 'post_date'] }}</h4>
         </div>
         <hr />
-        <p>{{ comments.loc[i, 'text'] }}</p>
+        <p class="fs-5">{{ comments.loc[i, 'text'] }}</p>
       </div>
     </div>
     {% endfor %}
