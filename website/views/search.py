@@ -10,7 +10,6 @@ search = Blueprint('search', __name__)
 
 @search.route('/', methods=['POST'])
 def index():
-    print(request.form.get('pattern'))
     if current_user.is_authenticated:
         return render_template(
             'search.html',
