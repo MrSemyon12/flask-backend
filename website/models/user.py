@@ -9,7 +9,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(255))
 
 
-def get_top_genres(conn, username):
+def get_top_genres(conn, username: str):
     '''Самые популярные жанры у пользователя.'''
     return pd.read_sql('''
         SELECT genre_name, count(movie_id) as cnt
@@ -23,7 +23,7 @@ def get_top_genres(conn, username):
     ''', conn, params={'username': username})
 
 
-def get_top_actors(conn, username):
+def get_top_actors(conn, username: str):
     '''Самые популярные актёры у пользователя.'''
     return pd.read_sql('''
         SELECT actor_name, count(movie_id) as cnt

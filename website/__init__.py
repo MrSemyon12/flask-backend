@@ -8,6 +8,7 @@ db = SQLAlchemy()
 basedir = path.abspath(path.dirname(__file__))
 DB_NAME = 'db.sqlite3'
 conn = sqlite3.connect(path.join(basedir, DB_NAME), check_same_thread=False)
+conn.create_function('low', 1, lambda x: x.lower())
 
 
 def create_app():
@@ -22,12 +23,14 @@ def create_app():
     from .views.games import games
     from .views.home import home
     from .views.movie import movie
+    from .views.search import search
 
     app.register_blueprint(auth, url_prefix='/auth')
     app.register_blueprint(self, url_prefix='/self')
     app.register_blueprint(games, url_prefix='/games')
     app.register_blueprint(home, url_prefix='/home')
     app.register_blueprint(movie, url_prefix='/movie')
+    app.register_blueprint(search, url_prefix='/search')
 
     from .models.user import User
 

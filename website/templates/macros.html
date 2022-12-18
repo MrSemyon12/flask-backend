@@ -57,3 +57,16 @@
 </form>
 {% endif %}
 {% endmacro %}
+
+{% macro smart_string(prev_pat="") %}
+<form class="d-flex" action="{{ url_for('search.index') }}" method="POST">
+  <input class="form-control me-2 fs-5 ps-4" type="search"
+    placeholder="Поиск по названию, жанру, актёру, режиссёру, стране и году" aria-label="Search" name="pattern"
+    value="{{ prev_pat }}">
+  <button type="submit" class="btn btn-outline-secondary">
+    <img src="{{ url_for('static', filename='images/search.png') }}" alt="no_picture.png" width="20" height="20"
+      class="mb-1" />
+    Искать
+  </button>
+</form>
+{% endmacro %}

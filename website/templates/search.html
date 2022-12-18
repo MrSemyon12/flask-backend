@@ -1,0 +1,12 @@
+{% extends 'base.html' %} {% block body %} {% import 'macros.html' as macros %}
+<div class="container mt-5">
+    {{ macros.smart_string(prev_pat) }}
+</div>
+<div class="album py-5 bg-light">
+    <div class="container">
+        <h1>По вашему запросу надено {{ len(found) }} совпадений</h1>
+        <hr />
+        {{ macros.render_album(found, watch_later, user, len) }}
+    </div>
+</div>
+{% endblock %}

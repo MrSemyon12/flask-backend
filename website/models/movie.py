@@ -3,7 +3,7 @@ import pandas as pd
 SAMPLE_SIZE = 6
 
 
-def get_movie(conn, movie_id):
+def get_movie(conn, movie_id: int):
     return pd.read_sql('''
         SELECT movie_id, title, year, poster_url, director_name, photo_url, group_concat(DISTINCT genre_name) AS genres, rating, country, description, duration
         FROM
@@ -16,7 +16,7 @@ def get_movie(conn, movie_id):
     ''', conn, params={'id': movie_id})
 
 
-def get_movie_actors(conn, movie_id):
+def get_movie_actors(conn, movie_id: int):
     return pd.read_sql('''
         SELECT *
         FROM
@@ -27,7 +27,7 @@ def get_movie_actors(conn, movie_id):
     ''', conn, params={'id': movie_id})
 
 
-def get_comments(conn, movie_id):
+def get_comments(conn, movie_id: int):
     return pd.read_sql('''
         SELECT username, post_date, text
         FROM
@@ -61,7 +61,7 @@ def remove_from_watch_later(conn, record):
     conn.commit()
 
 
-def get_watch_later(conn, username):
+def get_watch_later(conn, username: str):
     return pd.read_sql('''
         SELECT movie_id, title, year, poster_url, rating, group_concat(DISTINCT genre_name) AS genres
         FROM

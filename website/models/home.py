@@ -52,7 +52,7 @@ def get_random_movies(conn):
     ''', conn)
 
 
-def get_top_genres_movies(conn, username):
+def get_top_genres_movies(conn, username: str):
     '''Фильмы самых популярных жанров пользователя из "смотреть позже".'''
     return pd.read_sql(f'''
         SELECT DISTINCT movie_id, title, year, poster_url, rating, group_concat(DISTINCT genre_name) AS genres
@@ -84,7 +84,7 @@ def get_top_genres_movies(conn, username):
 ''', conn, params={'username': username})
 
 
-def get_top_actors_movies(conn, username):
+def get_top_actors_movies(conn, username: str):
     '''Фильмы с участием самых популярных актеров пользователя.'''
     return pd.read_sql(f'''
         SELECT DISTINCT movie_id, title, year, poster_url, rating, group_concat(DISTINCT genre_name) AS genres
@@ -122,7 +122,7 @@ def get_top_actors_movies(conn, username):
 ''', conn, params={'username': username})
 
 
-def get_top_directors_movies(conn, username):
+def get_top_directors_movies(conn, username: str):
     '''Фильмы самых популярных режиссеров пользователя, исключая фильмы из "смотреть позже".'''
     return pd.read_sql(f'''
         SELECT DISTINCT movie_id, title, year, poster_url, rating, group_concat(DISTINCT genre_name) AS genres

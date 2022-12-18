@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, request, redirect, url_for
-from flask_login import current_user, login_required
+from flask import Blueprint, render_template
+from flask_login import current_user
 from website import conn
 from website.models.home import *
 from website.models.movie import get_watch_later

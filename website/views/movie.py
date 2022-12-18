@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect
 from flask_login import current_user, login_required
 from website import conn
 from website.models.movie import *
